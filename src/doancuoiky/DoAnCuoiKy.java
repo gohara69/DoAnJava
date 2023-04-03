@@ -14,7 +14,7 @@ public class DoAnCuoiKy {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Hello World!!!
+        System.out.println("Hello World!!!");
     }
     
 }
