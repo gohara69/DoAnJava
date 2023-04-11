@@ -10,6 +10,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.BorderFactory;
 import model.model_menu;
 
 /**
@@ -39,6 +40,15 @@ public class menuItem extends javax.swing.JPanel {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+        if(selected){
+            setBackground(Color.BLUE);
+            setForeground(Color.WHITE);
+            setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        } else {
+            setBackground(Color.WHITE);
+            setForeground(Color.BLACK);
+            setBorder(BorderFactory.createEmptyBorder());
+        }
         repaint();
     }
     

@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 import model.model_menu;
@@ -23,14 +24,15 @@ public class listMenu<E extends Object> extends JList<E>{
     
     private final DefaultListModel model;
     private int selectedIndex = -1;
+    
     public listMenu(){
         model = new DefaultListModel();
         setModel(model);
         addMouseListener(new MouseAdapter(){
             @Override
-            public void mousePressed(MouseEvent me) {
-                if(SwingUtilities.isLeftMouseButton(me)){
-                    int index = locationToIndex(me.getPoint());
+            public void mouseClicked(MouseEvent e) {
+                if(SwingUtilities.isLeftMouseButton(e)){
+                    int index = locationToIndex(e.getPoint());
                     Object o = model.getElementAt(index);
                     if(o instanceof model_menu){
                         model_menu menu = (model_menu)o;
@@ -42,8 +44,8 @@ public class listMenu<E extends Object> extends JList<E>{
                     }
                     repaint();
                 }
+                super.mouseClicked(e);
             }
-            
         });
     }
     
