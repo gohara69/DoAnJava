@@ -4,7 +4,12 @@
  */
 package form;
 
+import java.awt.Color;
+import java.util.Vector;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.TableColumn;
 import model.model_card;
 
 /**
@@ -21,6 +26,31 @@ public class frmDoanhThu extends javax.swing.JPanel {
         card1.setData(new model_card(new ImageIcon("/icon/save-money.png"), "Doanh thu", "32.000.000 triệu đồng", "Tăng 30% so với tháng trước"));
         card2.setData(new model_card(new ImageIcon("/icon/food.png"), "Giá nguyên liệu", "32.000.000 triệu đồng", "Tăng 30% so với tháng trước"));
         card3.setData(new model_card(new ImageIcon("/icon/employee.png"), "Tổng lượt khách", "3.000.000", "Tăng 30% so với tháng trước"));
+   
+        //Tạo table bằng cách kéo table.java từ package swing vào giao diện
+        
+        //Header tự chỉnh thủ công: Click chuột trái vào table chọn table contents
+        
+        //Thiết kế phần cuối table không bị xám
+        spTable.getViewport().setBackground(Color.WHITE);
+        JPanel p = new JPanel();
+        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        
+        //Thêm dữ liệu vào bảng
+        Vector info = new Vector();
+        info.add("Mã sinh viên");
+        info.add("Tên sinh viên");
+        info.add("Họ tên");
+        info.add("Địa chỉ");
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
+        table1.addRow(info);
     }
 
     /**
@@ -38,8 +68,8 @@ public class frmDoanhThu extends javax.swing.JPanel {
         card3 = new component.card();
         panelBorder1 = new swing.panelBorder();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        spTable = new javax.swing.JScrollPane();
+        table1 = new swing.table();
 
         jLayeredPane1.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
@@ -59,20 +89,25 @@ public class frmDoanhThu extends javax.swing.JPanel {
 
         jLabel1.setText("Custome lại table");
 
-        jScrollPane1.setBorder(null);
+        spTable.setBorder(null);
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
-        jScrollPane1.setViewportView(table);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        spTable.setViewportView(table1);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -82,9 +117,9 @@ public class frmDoanhThu extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+            .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                .addComponent(spTable)
                 .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
@@ -93,7 +128,7 @@ public class frmDoanhThu extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -102,10 +137,10 @@ public class frmDoanhThu extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -126,8 +161,8 @@ public class frmDoanhThu extends javax.swing.JPanel {
     private component.card card3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
-    private javax.swing.JScrollPane jScrollPane1;
     private swing.panelBorder panelBorder1;
-    private javax.swing.JTable table;
+    private javax.swing.JScrollPane spTable;
+    private swing.table table1;
     // End of variables declaration//GEN-END:variables
 }

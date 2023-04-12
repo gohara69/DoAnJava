@@ -4,6 +4,7 @@
  */
 package component;
 
+import event.eventMenuSelected;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -21,6 +22,11 @@ import model.model_menu;
  */
 public class menu extends javax.swing.JPanel {
 
+    private eventMenuSelected event;
+    public void addEventMenuSelected(eventMenuSelected event){
+        this.event = event;
+        listMenu1.addEventMenuSelected(event);
+    }
     /**
      * Creates new form model_menu
      */
@@ -42,6 +48,7 @@ public class menu extends javax.swing.JPanel {
         listMenu1.addItem(new model_menu("", "", model_menu.menuType.EMPTY));
         listMenu1.addItem(new model_menu("/icon/compliant", "Quyền", model_menu.menuType.MENU));
         listMenu1.addItem(new model_menu("/icon/save-money", "Doanh thu", model_menu.menuType.MENU));
+        listMenu1.addItem(new model_menu("/icon/emergency-exit", "Thoát", model_menu.menuType.MENU));
     }
 
     /**

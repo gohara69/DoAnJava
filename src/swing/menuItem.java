@@ -23,6 +23,7 @@ public class menuItem extends javax.swing.JPanel {
      * Creates new form menuItem
      */
     private boolean selected;
+    private boolean over;
     public menuItem(model_menu data) {
         initComponents();
         setOpaque(false);
@@ -49,6 +50,11 @@ public class menuItem extends javax.swing.JPanel {
             setForeground(Color.BLACK);
             setBorder(BorderFactory.createEmptyBorder());
         }
+        repaint();
+    }
+    
+    public void setOver(boolean over){
+        this.over = over;
         repaint();
     }
     
@@ -90,10 +96,14 @@ public class menuItem extends javax.swing.JPanel {
     
     @Override
     protected void printComponent(Graphics g) {
-        if(selected){
+        if(selected || over){
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(255, 255, 255, 80));
+            if(selected){
+                g2.setColor(new Color(255, 255, 255, 80));
+            } else {
+                g2.setColor(new Color(255, 255, 255, 20));
+            }
             g2.fillRoundRect(10, 0, getWidth() - 20, getHeight(), 5, 5);
         }
         super.printComponent(g); 
