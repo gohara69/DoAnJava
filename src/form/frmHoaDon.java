@@ -22,6 +22,21 @@ public class frmHoaDon extends javax.swing.JPanel {
      */
     public frmHoaDon() {
         initComponents();
+        Vector vheader = new Vector();
+        Vector vdata = new Vector();
+        Vector vdataChild = new Vector();
+        vheader.add("Mã");
+        vheader.add("Nhà cung cấp");
+        vheader.add("Nhân viên");
+        vheader.add("Ngày nhập");
+        vheader.add("Thành tiền");
+        vdataChild.add("HD001");
+        vdataChild.add("Minh Sang");
+        vdataChild.add("Trần Thị Huyền Trang");
+        vdataChild.add("2002-12-12");
+        vdataChild.add("2000");
+        vdata.add(vdataChild);
+        tbHoaDon.setModel(new DefaultTableModel(vdata, vheader));
         spHoaDon.getViewport().setBackground(Color.WHITE);
         JPanel p = new JPanel();
         spHoaDon.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
@@ -41,7 +56,7 @@ public class frmHoaDon extends javax.swing.JPanel {
         jComboBox3 = new javax.swing.JComboBox<>();
         panelBorder1 = new swing.panelBorder();
         spHoaDon = new javax.swing.JScrollPane();
-        tbHoaDon = new swing.table();
+        tbHoaDon = new javax.swing.JTable();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -55,20 +70,15 @@ public class frmHoaDon extends javax.swing.JPanel {
 
         tbHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, true, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         spHoaDon.setViewportView(tbHoaDon);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
@@ -130,6 +140,6 @@ public class frmHoaDon extends javax.swing.JPanel {
     private swing.panelBorder panelBorder1;
     private javax.swing.JScrollPane spHoaDon;
     private javax.swing.JScrollPane spTable;
-    private swing.table tbHoaDon;
+    private javax.swing.JTable tbHoaDon;
     // End of variables declaration//GEN-END:variables
 }
