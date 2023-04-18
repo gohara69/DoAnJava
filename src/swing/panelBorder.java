@@ -4,9 +4,11 @@
  */
 package swing;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.HashSet;
 
 /**
  *
@@ -49,6 +51,7 @@ public class panelBorder extends javax.swing.JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+        g2.setBackground(Color.WHITE);
         super.paintComponent(g); 
     }
     

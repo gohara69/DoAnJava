@@ -21,6 +21,7 @@ public class table extends JTable{
         setShowHorizontalLines(true);
         setRowHeight(40);
         setGridColor(new Color(230, 230, 230));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer(){
             @Override
@@ -42,8 +43,10 @@ public class table extends JTable{
                     setBorder(noFocusBorder);
                     if(isSelected){
                        com.setForeground(new Color(13, 113, 182));
+                       com.setBackground(new Color(113, 182, 159));
                     } else {
                         com.setForeground(new Color(102, 102, 102));
+                        com.setBackground(Color.WHITE);
                     }
                     return com;
                 }
