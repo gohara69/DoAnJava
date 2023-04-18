@@ -67,7 +67,6 @@ public class frmDoanhThu extends javax.swing.JPanel {
         card2 = new component.card();
         card3 = new component.card();
         panelBorder1 = new swing.panelBorder();
-        jLabel1 = new javax.swing.JLabel();
         spTable = new javax.swing.JScrollPane();
         table1 = new swing.table();
 
@@ -86,8 +85,6 @@ public class frmDoanhThu extends javax.swing.JPanel {
         jLayeredPane1.add(card3);
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setText("Custome lại table");
 
         spTable.setBorder(null);
 
@@ -114,21 +111,15 @@ public class frmDoanhThu extends javax.swing.JPanel {
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(spTable)
+                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -159,7 +150,6 @@ public class frmDoanhThu extends javax.swing.JPanel {
     private component.card card1;
     private component.card card2;
     private component.card card3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private swing.panelBorder panelBorder1;
     private javax.swing.JScrollPane spTable;

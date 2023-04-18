@@ -4,6 +4,19 @@
  */
 package form;
 
+import DAO.DanhMucDAO;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import model.DanhMuc;
+import swing.table;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author VU HOANG
@@ -15,8 +28,69 @@ public class frmDanhMuc extends javax.swing.JPanel {
      */
     public frmDanhMuc() {
         initComponents();
+        txtSearch.setHint("Tìm kiếm theo tên ... ");
+        
+        //Thiết kế phần cuối table không bị xám
+        spTable.getViewport().setBackground(Color.WHITE);
+        JPanel p = new JPanel();
+        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        loadData();
+        txtSearch.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                loadDataFromSearch();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                loadDataFromSearch();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                loadDataFromSearch();
+            }
+            
+            public void loadDataFromSearch(){
+                clear();
+                DanhMuc a = new DanhMuc();
+                a.setDM_TEN(txtSearch.getText().trim());
+                ArrayList<DanhMuc> dsDM = DanhMucDAO.timKiemDanhMucTheoTen(a);
+                for(DanhMuc dm: dsDM){
+                    Vector info = new Vector();
+                    info.add(dm.getDM_ID());
+                    info.add(dm.getDM_TEN());
+
+                    tblDanhMuc.addRow(info);
+                }
+            }
+        });  
+    }
+    
+    public void clear(){
+        DefaultTableModel dtm = (DefaultTableModel) tblDanhMuc.getModel();
+        dtm.setRowCount(0);
     }
 
+    public void loadData(){
+        clear();
+        ArrayList<DanhMuc> dsDM = DanhMucDAO.layDanhSachDanhMuc();
+        for(DanhMuc dm: dsDM){
+            Vector info = new Vector();
+            info.add(dm.getDM_ID());
+            info.add(dm.getDM_TEN());
+            
+            tblDanhMuc.addRow(info);
+        }
+    }
+    
+    public void showDetail(int pos){
+        int id = (int) tblDanhMuc.getValueAt(pos, 0);
+        String tenDm = (String) tblDanhMuc.getValueAt(pos, 1);
+        
+        txtDanhMucID.setText(id + "");
+        txtTenDanhMuc.setText(tenDm);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,30 +101,218 @@ public class frmDanhMuc extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtDanhMucID = new javax.swing.JTextField();
+        txtTenDanhMuc = new javax.swing.JTextField();
+        btnThem = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        panelBorder1 = new swing.panelBorder();
+        spTable = new javax.swing.JScrollPane();
+        tblDanhMuc = new swing.table();
+        txtSearch = new swing.searchText();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Danh mục");
+        jLabel1.setText("Mã danh mục");
+
+        jLabel2.setText("Tên danh mục");
+
+        txtDanhMucID.setEnabled(false);
+
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
+
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
+        tblDanhMuc.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã danh mục", "Tên danh mục"
+            }
+        ));
+        tblDanhMuc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDanhMucMouseClicked(evt);
+            }
+        });
+        tblDanhMuc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblDanhMucKeyReleased(evt);
+            }
+        });
+        spTable.setViewportView(tblDanhMuc);
+
+        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
+        panelBorder1.setLayout(panelBorder1Layout);
+        panelBorder1Layout.setHorizontalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE))
+        );
+        panelBorder1Layout.setVerticalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
+            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
+        );
+
+        txtSearch.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtSearchInputMethodTextChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addComponent(jLabel1)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtDanhMucID, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTenDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnThem)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnXoa)
+                                .addGap(15, 15, 15)
+                                .addComponent(btnSua))))
+                    .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jLabel1)
-                .addContainerGap(146, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnThem)
+                    .addComponent(btnSua)
+                    .addComponent(btnXoa)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(txtDanhMucID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tblDanhMucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhMucMouseClicked
+        showDetail(((table)evt.getSource()).getSelectedRow());
+    }//GEN-LAST:event_tblDanhMucMouseClicked
+
+    private void tblDanhMucKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDanhMucKeyReleased
+        showDetail(((table)evt.getSource()).getSelectedRow());
+    }//GEN-LAST:event_tblDanhMucKeyReleased
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        if(txtTenDanhMuc.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên danh mục để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int lastIndex = tblDanhMuc.getRowCount();
+        int lastID = (int) tblDanhMuc.getValueAt(lastIndex - 1, 0);
+        try {
+            DanhMuc dm = new DanhMuc();
+            dm.setDM_ID(lastID + 1);
+            dm.setDM_TEN(txtTenDanhMuc.getText().trim());
+            DanhMucDAO.themDanhMuc(dm);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Không thêm được danh mục", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        loadData();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void txtSearchInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtSearchInputMethodTextChanged
+        
+    }//GEN-LAST:event_txtSearchInputMethodTextChanged
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        int pos = tblDanhMuc.getSelectedRow();
+        if(pos >= 0 && JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa danh mục này", "Thông báo", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.OK_OPTION) {
+            DanhMuc dm = new DanhMuc();
+            int selectedID = (int) tblDanhMuc.getValueAt(pos, 0);
+            dm.setDM_ID(selectedID);
+            
+            if(DanhMucDAO.xoaDanhMuc(dm)) {
+                JOptionPane.showMessageDialog(this, "Xóa danh mục thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa danh mục không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        loadData();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        if(txtTenDanhMuc.getText().trim().length() == 0){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên danh mục để sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int pos = tblDanhMuc.getSelectedRow();
+        if(pos >= 0){
+            DanhMuc dm = new DanhMuc();
+            int selectedID = (int) tblDanhMuc.getValueAt(pos, 0);
+            dm.setDM_ID(selectedID);
+            dm.setDM_TEN(txtTenDanhMuc.getText().trim());
+            
+            if(DanhMucDAO.capNhatDanhMuc(dm)) {
+                JOptionPane.showMessageDialog(this, "Cập nhật danh mục thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Cập nhật danh mục không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        loadData();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private swing.panelBorder panelBorder1;
+    private javax.swing.JScrollPane spTable;
+    private swing.table tblDanhMuc;
+    private javax.swing.JTextField txtDanhMucID;
+    private swing.searchText txtSearch;
+    private javax.swing.JTextField txtTenDanhMuc;
     // End of variables declaration//GEN-END:variables
 }
