@@ -389,7 +389,10 @@ public class frmBan extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        frmChinhSuaBan frm = new frmChinhSuaBan();
+        frm.setVisible(true);
+        main m = new main();
+        frm.setLocation(320, 82);
     }//GEN-LAST:event_jButton7ActionPerformed
 
 
