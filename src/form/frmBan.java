@@ -357,7 +357,7 @@ public class frmBan extends javax.swing.JPanel {
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18
+                        .addGap(18, 18, 18)
                 .addGap(25, 25, 25))
         );
     }// </editor-fold>//GEN-END:initComponents
