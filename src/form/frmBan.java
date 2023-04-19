@@ -330,13 +330,6 @@ public class frmBan extends javax.swing.JPanel {
         jButton6.setIconTextGap(10);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
-        jButton7.setText("Chỉnh Sửa");
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setIconTextGap(10);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
