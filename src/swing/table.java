@@ -42,8 +42,8 @@ public class table extends JTable{
                     com.setBackground(Color.WHITE);
                     setBorder(noFocusBorder);
                     if(isSelected){
-                       com.setForeground(new Color(13, 113, 182));
-                       com.setBackground(new Color(113, 182, 159));
+                       com.setForeground(Color.BLACK);
+                       com.setBackground(new Color(255, 216, 143));
                     } else {
                         com.setForeground(new Color(102, 102, 102));
                         com.setBackground(Color.WHITE);

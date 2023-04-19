@@ -71,13 +71,12 @@ public class main extends javax.swing.JFrame {
         setForm(new frmTrangChu());
     }
     
-    private void setForm(JComponent com){
+    public void setForm(JComponent com){
         mainPanel.removeAll();
         mainPanel.add(com);
         mainPanel.repaint();
         mainPanel.revalidate();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,8 +170,8 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel mainPanel;
-    private component.menu menu;
+    public javax.swing.JPanel mainPanel;
+    public component.menu menu;
     private swing.panelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
 }
