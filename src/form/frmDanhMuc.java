@@ -288,7 +288,6 @@ public class frmDanhMuc extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private swing.panelBorder panelBorder1;
-    private javax.swing.JScrollPane spTable;
     private swing.table tblDanhMuc;
     private swing.searchText txtDanhMucID;
     private swing.searchText txtSearch;

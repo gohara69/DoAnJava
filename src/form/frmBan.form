@@ -18,14 +18,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jButton1" min="-2" pref="132" max="-2" attributes="0"/>
-                  <Component id="jButton5" min="-2" pref="132" max="-2" attributes="0"/>
-                  <Component id="jButton6" min="-2" pref="132" max="-2" attributes="0"/>
-                  <Component id="jButton7" min="-2" pref="132" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jButton1" pref="132" max="32767" attributes="0"/>
+                  <Component id="jButton5" pref="132" max="32767" attributes="0"/>
+                  <Component id="jButton6" pref="132" max="32767" attributes="0"/>
+                  <Component id="btnChinhSua" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel1" pref="605" max="32767" attributes="0"/>
+              <Component id="jPanel1" pref="733" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -37,12 +37,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jButton1" min="-2" pref="110" max="-2" attributes="0"/>
-                      <EmptySpace pref="38" max="32767" attributes="0"/>
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
                       <Component id="jButton5" min="-2" pref="110" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton6" min="-2" pref="110" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButton7" min="-2" pref="110" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnChinhSua" min="-2" pref="115" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel1" max="32767" attributes="0"/>
               </Group>
@@ -314,11 +314,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="T&#x1ea5;t C&#x1ea3;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton7">
+    <Component class="swing.button" name="btnChinhSua">
       <Properties>
-        <Property name="text" type="java.lang.String" value="T&#x1ea5;t C&#x1ea3;"/>
+        <Property name="text" type="java.lang.String" value="Ch&#x1ec9;nh s&#x1eed;a"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChinhSuaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
