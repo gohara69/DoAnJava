@@ -14,7 +14,7 @@ public class frmTrangChu extends javax.swing.JPanel {
      * Creates new form frmTrangChu
      */
     public frmTrangChu() {
-        minhsang();
+        initComponents();
     }
 
     /**
