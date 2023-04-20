@@ -46,9 +46,9 @@ public class frmChonMon extends javax.swing.JPanel {
     }
 
     public void pushImageToForm() {
-        String[] nameImg = {"coca.jpg", "bap-them.jpg", "ca-vien-chien.jpg", "ca-vien-them.jpg", "dau-hu-ky-them.jpg", "dau-hu-them.jpg, "
-            + "dui-ga-chien.jpg", "ga-cuon-rong-bien.jpg", "ga-vien-han-quoc.jpg", "ga-vien-nhat-ban.jpg", "ga-vong-seoul.jpg",
-            "ha-cao-chien.jpg", "ho-lo-chien.jpg", "khoai-mon-them.jpg"};
+        String[] nameImg = {"coca.jpg", "bap-them.jpg", "ca-vien-chien.jpg", "ca-vien-them.jpg", "dau-hu-ky-them.jpg", 
+            "ga-cuon-rong-bien.jpg", "ga-vien-han-quoc.jpg", "ga-vien-nhat-ban.jpg", "ha-cao-chien.jpg", "ho-lo-chien.jpg", "khoai-mon-them.jpg", 
+        "khoai-tay-chien.jpg", "kim-chi.jpg", "lau-kim-chi-bach-tuot.jpg", "lau-kim-chi-bo-my.jpg"};
         for (int i = 0; i < nameImg.length; i++) {
             File file = new File("F:/OneDrive - Ho Chi Minh city University of Food Industry/Ki_6_CNTT/Java/DoAnJava/src/images/" + nameImg[i]);
             String absolutePath = file.getAbsolutePath();
@@ -83,6 +83,21 @@ public class frmChonMon extends javax.swing.JPanel {
                     break;
                 case 9:
                     this.jLabel11.setIcon(icon);
+                    break;
+                case 10:
+                    this.jLabel12.setIcon(icon);
+                    break;
+                case 11:
+                    this.jLabel13.setIcon(icon);
+                    break;
+                case 12:
+                    this.jLabel14.setIcon(icon);
+                    break;
+                case 13:
+                    this.jLabel15.setIcon(icon);
+                    break;
+                case 14:
+                    this.jLabel16.setIcon(icon);
                     break;
                 default:
                     throw new AssertionError();
