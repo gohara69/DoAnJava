@@ -63,7 +63,11 @@ public class main extends javax.swing.JFrame {
                         break;
                     case 10:
                         System.exit(0);
+<<<<<<< HEAD
                         tuyen;
+=======
+                        minhsang;
+>>>>>>> 2fe7ad519d39bcc564cfeb25bfcf58fa0fdaafe5
                 }
             }
             
