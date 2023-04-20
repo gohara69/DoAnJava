@@ -17,7 +17,7 @@ import form.frmTrangChu;
 import java.awt.Color;
 import javax.swing.JComponent;
 <<<<<<< HEAD
-Phan Thi Ngoc Tuyen
+Ngo Ngoc Minh Sang
 =======
 >>>>>>> 6f2154799b2e1d9c1164e899e2372571508e9271
 
