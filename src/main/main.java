@@ -16,7 +16,6 @@ import form.frmQuyen;
 import form.frmTrangChu;
 import java.awt.Color;
 import javax.swing.JComponent;
-Ngô Ngọc Minh Sang
 
 /**
  *
