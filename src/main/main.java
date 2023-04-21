@@ -6,6 +6,7 @@ package main;
 
 import event.eventMenuSelected;
 import form.frmBan;
+import form.frmChonMon;
 import form.frmDanhMuc;
 import form.frmDoanhThu;
 import form.frmHoaDon;
@@ -50,7 +51,7 @@ public class main extends javax.swing.JFrame {
                         setForm(new frmNhanVien());
                         break;
                     case 5:
-                        setForm(new frmBan());
+                        setForm(new frmChonMon());
                         break;
                     case 6:
                         setForm(new frmHoaDon());
@@ -63,7 +64,11 @@ public class main extends javax.swing.JFrame {
                         break;
                     case 10:
                         System.exit(0);
+<<<<<<< HEAD
                         tuyen;
+=======
+                        break;
+>>>>>>> 66fc0f90c39c6cb4f8e3525949753a144fcf2d1d
                 }
             }
             

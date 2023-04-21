@@ -139,7 +139,6 @@ public class frmHoaDon extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox3;
     private swing.panelBorder panelBorder1;
     private javax.swing.JScrollPane spHoaDon;
-    private javax.swing.JScrollPane spTable;
     private javax.swing.JTable tbHoaDon;
     // End of variables declaration//GEN-END:variables
 }
