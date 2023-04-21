@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataService;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,43 +12,49 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author VU HOANG
  */
 public class DataService {
+
     private Connection connect;
-    
-    public void open(){
+
+    public void open() {
 //        String strServer = "DESKTOP-3PMAECF";
 //        String strDatabase = "QL_QuanMiCay";
 //        String strUser = "sa";
 //        String strPassword = "123";
-        
-        String strServer = "DELL\\SQLEXPRESS";
+
+        //Tuyền
+        String strServer = "LAPTOP-0LI9CK71";
         String strDatabase = "QL_QuanMiCay";
-        String strUser = "sa";
-        String strPassword = "21062002";
+        String strUser = "ngoctuyen";
+        String strPassword = "1234";
+
+//        String strServer = "DELL\\SQLEXPRESS";
+//        String strDatabase = "QL_QuanMiCay";
+//        String strUser = "sa";
+//        String strPassword = "21062002";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String connectUrl = "jdbc:sqlserver://" + strServer + ":1433; databaseName = " + strDatabase
-                                + "; user = " + strUser + "; password = " + strPassword;
+                    + "; user = " + strUser + "; password = " + strPassword;
             connect = DriverManager.getConnection(connectUrl);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void close(){
+
+    public void close() {
         try {
             this.connect.close();
         } catch (SQLException ex) {
             Logger.getLogger(DataService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public ResultSet executeQuery (String query) {
+
+    public ResultSet executeQuery(String query) {
         ResultSet rs = null;
         try {
             Statement st = connect.createStatement();
@@ -57,8 +64,8 @@ public class DataService {
         }
         return rs;
     }
-    
-    public int executeUpdate (String query) {
+
+    public int executeUpdate(String query) {
         int n = -1;
         try {
             Statement st = connect.createStatement();
