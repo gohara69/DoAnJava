@@ -64,11 +64,7 @@ public class main extends javax.swing.JFrame {
                         break;
                     case 10:
                         System.exit(0);
-<<<<<<< HEAD
-                        tuyen;
-=======
                         break;
->>>>>>> 66fc0f90c39c6cb4f8e3525949753a144fcf2d1d
                 }
             }
             
