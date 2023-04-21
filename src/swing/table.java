@@ -27,7 +27,7 @@ public class table extends JTable{
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 tableHeader header = new tableHeader(value + "");
-                if(column == 4){
+                if(column == 5){
                     header.setHorizontalAlignment(JLabel.CENTER);
                 }
                 return header;
@@ -37,7 +37,7 @@ public class table extends JTable{
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if(column != 4){
+                if(column != 5){
                     Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                     com.setBackground(Color.WHITE);
                     setBorder(noFocusBorder);
@@ -50,7 +50,7 @@ public class table extends JTable{
                     }
                     return com;
                 }
-                return new JLabel("Testing");
+                return new JLabel("");
             }
         });
     }
