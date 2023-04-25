@@ -53,7 +53,7 @@ public class frmChonMon extends javax.swing.JPanel {
             "lau-nam-bo.jpg", "lau-nam-bo-my.jpg", "lau-nam-hai-san.jpg", "lau-nam-suon-sun.jpg", "lau-nam-thap-cam.jpg", "lau-nam-thap-cam-dac-biet.jpg", 
             "soju-huong-dau.jpg", "soju-huong-nho.jpg", "soju-huong-tao.jpg", "soju-truyen-thong.jpg"};
         for (int i = 0; i < nameImg.length; i++) {
-            File file = new File("F:/OneDrive - Ho Chi Minh city University of Food Industry/Ki_6_CNTT/Java/DoAnJava/src/images/" + nameImg[i]);
+            File file = new File("./src/images/" + nameImg[i]);
             String absolutePath = file.getAbsolutePath();
             ImageIcon icon = resizeImage(absolutePath, 100, 100);
             switch (i) {

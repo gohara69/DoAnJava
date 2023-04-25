@@ -46,7 +46,6 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
                 handleWhenEditColTenNguyenLieu(row, col);
             } else if (col == 3) {
                 handleWhenEditColSoLuong(row, col);
-                //updateTableWhenEnterQuantity();
             }
         }
     };
@@ -103,7 +102,6 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
         nul.add("");
         nul.add("");
         tblNguyenLieu.addRow(nul);
-        data.add(nul);
         tblNguyenLieu.getModel().addTableModelListener(modelTableListener);
     }
     
@@ -147,7 +145,7 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
             NguyenLieu nl = new NguyenLieu();
             nl.setNL_ID(IngredientId);
             
-            if(data.isEmpty() || "".equals(((Vector) data.get(row)).get(3))){
+            if(data.isEmpty() || "".equals((String) tblNguyenLieu.getValueAt(row, 4))){
                 handleWhenEditColIdNotEditQuantity(nl);
             } else {
                 handleWhenEditColIdEditQuantity(nl, row);
@@ -159,9 +157,6 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
     
     public void handleWhenEditColIdNotEditQuantity(NguyenLieu nl){
         ArrayList<NguyenLieu> dsNL = NguyenLieuDAO.searchIngredientById(nl);
-        if(!data.isEmpty()){
-            data.remove(data.size() - 1);
-        }
         for(NguyenLieu nlieu: dsNL){
             Vector info = new Vector();
             info.add(nlieu.getNL_ID());
@@ -195,13 +190,13 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
             NguyenLieu nl = new NguyenLieu();
             nl.setNL_ID(id);
             
-            if(data.isEmpty() || "".equals(((Vector) data.get(row)).get(3))){
+            if(data.isEmpty() || "".equals((String) tblNguyenLieu.getValueAt(row, 4))){
                 handleWhenEditColIdNotEditQuantity(nl); 
             } else {
                 handleWhenEditColIdEditQuantity(nl, row);
             }
         } catch(Exception ex) {
-            JOptionPane.showMessageDialog(frmNhapNguyenLieu.this, "Vui lòng nhập mã nguyên liệu dòng 189", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frmNhapNguyenLieu.this, "Vui lòng nhập mã nguyên liệu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -214,18 +209,19 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
         
         int id = (Integer)tblNguyenLieu.getValueAt(row, 0);
         Vector info = (Vector) data.get(row);
+        if(Integer.parseInt((String) info.get(3)) <= 0){
+            JOptionPane.showMessageDialog(this, "Số lượng cần nhập phải lớn hơn 0", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            updateTable();
+            return;
+        }
         try{
             NguyenLieu nl = new NguyenLieu();
             nl.setNL_ID(id);
             Float gia = NguyenLieuDAO.searchIngredientPriceById(nl);
             boolean flag = ("".equals(((Vector) data.get(row)).get(4)));
             info.set(4,"" + gia * Integer.parseInt((String) info.get(3)));
+            updateTableWhenEnterQuantity();
             sumTotalPrice();
-            if(flag){
-                updateTableWhenEnterQuantity();
-            } else {
-                updateTable();
-            }
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(frmNhapNguyenLieu.this, "Vui lòng nhập số lượng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
