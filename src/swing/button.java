@@ -5,6 +5,7 @@
 package swing;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -23,6 +24,50 @@ public class button extends JButton{
         colorOver = new Color(255, 100, 36);
         colorClick = new Color(255, 129, 64);
         colorBorder = new Color(255, 158, 90);
+        Font myFont1 = new Font("Serif", Font.BOLD, 14);
+        this.setFont(myFont1);
+        setForeground(Color.WHITE);
+        setContentAreaFilled(false);
+        addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBackground(color);
+                over = false;
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setBackground(colorOver);
+                over = true;
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(over){
+                    setBackground(colorOver);
+
+                } else {
+                    setBackground(color);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                setBackground(colorClick);
+            }   
+        });
+    }
+    
+    public button(String text){
+        this.setText(text);
+        setColor(new Color(255,69,0));
+        setBackground(new Color(255,69,0));
+        colorOver = new Color(255, 100, 36);
+        colorClick = new Color(255, 129, 64);
+        colorBorder = new Color(255, 158, 90);
+        Font myFont1 = new Font("Serif", Font.BOLD, 14);
+        this.setFont(myFont1);
+        setForeground(Color.WHITE);
         setContentAreaFilled(false);
         addMouseListener(new MouseAdapter(){
             @Override

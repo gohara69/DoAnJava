@@ -42,7 +42,7 @@ public class menuItem extends javax.swing.JPanel {
     public void setSelected(boolean selected) {
         this.selected = selected;
         if(selected){
-            setBackground(Color.BLUE);
+            setBackground(new Color(255, 216, 143));
             setForeground(Color.WHITE);
             setBorder(BorderFactory.createLineBorder(Color.WHITE));
         } else {

@@ -18,10 +18,13 @@ import model.NhaCungCap;
  * @author VU HOANG
  */
 public class NguyenLieuDAO {
-    public static ArrayList<NguyenLieu> searchIngredientById (NguyenLieu nl) {
+    public static ArrayList<NguyenLieu> searchIngredientById (NguyenLieu nl, int nccId) {
         ArrayList<NguyenLieu> dsdm = new ArrayList<>();
         try {
-            String sql = "select * from NguyenLieu where NL_ID = " + nl.getNL_ID()+ "";
+            String sql = "select top 1 NGUYENLIEU.NL_ID, NL_TEN, NL_DONVITINH, NL_GIA\n" +
+                        "from NGUYENLIEU, GIANGUYENLIEU\n" +
+                        "where NGUYENLIEU.NL_ID = GIANGUYENLIEU.NL_ID and NGUYENLIEU.NL_ID = " + nl.getNL_ID()
+                        + " and NCC_ID = " + nccId + " order by NGAYTHAYDOI desc";
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
@@ -30,7 +33,7 @@ public class NguyenLieuDAO {
                 nlieu.setNL_ID(rs.getInt("NL_ID"));
                 nlieu.setNL_TEN(rs.getString("NL_TEN"));
                 nlieu.setNL_DONVITINH(rs.getString("NL_DONVITINH"));
-                nlieu.setNL_SOLUONG(rs.getInt("NL_SOLUONG"));
+                nlieu.setNL_GIA(rs.getFloat("NL_GIA"));
                 
                 dsdm.add(nlieu);
             }
