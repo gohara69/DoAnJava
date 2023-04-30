@@ -27,15 +27,15 @@ public class DataService {
 //        String strPassword = "123";
 
         //Tuyền
-        String strServer = "LAPTOP-0LI9CK71";
-        String strDatabase = "QL_QuanMiCay";
-        String strUser = "ngoctuyen";
-        String strPassword = "1234";
-
-//        String strServer = "DELL\\SQLEXPRESS";
+//        String strServer = "LAPTOP-0LI9CK71";
 //        String strDatabase = "QL_QuanMiCay";
-//        String strUser = "sa";
-//        String strPassword = "21062002";
+//        String strUser = "ngoctuyen";
+//        String strPassword = "1234";
+
+        String strServer = "DELL\\SQLEXPRESS";
+        String strDatabase = "QL_QuanMiCay";
+        String strUser = "sa";
+        String strPassword = "21062002";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String connectUrl = "jdbc:sqlserver://" + strServer + ":1433; databaseName = " + strDatabase
