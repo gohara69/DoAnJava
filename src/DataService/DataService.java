@@ -26,7 +26,7 @@ public class DataService {
         String strUser = "sa";
         String strPassword = "123";
 
-//        //Tuyền
+        //Tuyền
 //        String strServer = "LAPTOP-0LI9CK71";
 //        String strDatabase = "QL_QuanMiCay";
 //        String strUser = "ngoctuyen";
