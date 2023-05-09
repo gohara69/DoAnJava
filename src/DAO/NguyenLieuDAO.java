@@ -62,7 +62,7 @@ public class NguyenLieuDAO {
     public static ArrayList<Integer> searchIngredientByNCCId (NhaCungCap ncc) {
         ArrayList<Integer> dsnl = new ArrayList<>();
         try {
-            String sql = "select distinct NL_ID from GIANGUYENLIEU where NCC_ID = " + ncc.getNCC_ID();
+            String sql = "select distinct NL_ID from NGUYENLIEU where NCC_ID = " + ncc.getNCC_ID();
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);

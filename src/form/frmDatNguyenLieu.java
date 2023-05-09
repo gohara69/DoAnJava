@@ -36,6 +36,9 @@ import model.ChiTietPhieuDat;
 import swing.button;
 import swing.combobox;
 import swing.scrollbar;
+import swing.tableActionCellEditor;
+import swing.tableActionEvent;
+import swing.tableCellRenderer;
 
 /**
  *
@@ -44,6 +47,7 @@ import swing.scrollbar;
 public class frmDatNguyenLieu extends javax.swing.JFrame {
     Vector data = new Vector();
     Vector dataId = new Vector();
+    tableActionEvent event;
     TableModelListener modelTableListener = new TableModelListener(){
         @Override
         public void tableChanged(TableModelEvent e) {
@@ -97,6 +101,16 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         });
         getDataToColNL_IDFromNCC_ID();
         getDataToColTenNguyenLieuFromNCC_ID();
+        event = new tableActionEvent(){
+            @Override
+            public void onDelete(int row) {
+                if(tblNguyenLieu.isEditing()){
+                    tblNguyenLieu.getCellEditor().stopCellEditing();
+                }
+                data.remove(row);
+                updateTableWhenEnterQuantity();
+            }
+        };
     }
     
     public void updateTable(){
@@ -106,6 +120,8 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
             tblNguyenLieu.addRow((Vector) data.get(i));
         }
         tblNguyenLieu.getModel().addTableModelListener(modelTableListener);
+        tblNguyenLieu.getColumnModel().getColumn(6).setCellRenderer(new tableCellRenderer());
+        tblNguyenLieu.getColumnModel().getColumn(6).setCellEditor(new tableActionCellEditor(event));
     }
     
     public void updateTableWhenEnterQuantity(){
@@ -295,7 +311,25 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         PhieuDatDAO.themPhieuNhap(pd);
     }
     
+    public void gopChiTietPhieuDat(){
+        for(int i = 0 ; i < data.size() - 1 ; i++){
+            Vector a = (Vector) data.get(i);
+            for(int j = i + 1 ; j < data.size() ; j++){
+                Vector b = (Vector) data.get(j);
+                if(a.get(0) == b.get(0)){
+                    int soluong = Integer.parseInt((String) b.get(3)) + Integer.parseInt((String)a.get(3));
+                    a.set(3, soluong + "");
+                    a.set(5, soluong * Float.parseFloat(a.get(4).toString()));
+                    System.out.println(a.get(5));
+                    data.remove(b);
+                    j--;
+                }
+            }
+        }
+    }
+    
     public void themChiTietPhieuDat(){
+        gopChiTietPhieuDat();
         for(int i = 0 ; i < data.size() ; i++){
             ChiTietPhieuDat ctpd = new ChiTietPhieuDat();
             ctpd.setPD_ID(Integer.parseInt(txtPhieuDatId.getText()));
@@ -323,6 +357,8 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         nul.add("");
         nul.add("");
         tblNguyenLieu.addRow(nul);
+        tblNguyenLieu.getColumnModel().getColumn(6).setCellRenderer(new tableCellRenderer());
+        tblNguyenLieu.getColumnModel().getColumn(6).setCellEditor(new tableActionCellEditor(event));
         data.removeAllElements();
         tblNguyenLieu.getModel().addTableModelListener(modelTableListener);
     }
@@ -394,7 +430,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "NL_ID", "Tên nguyên liệu", "Đơn vị tính", "Số lượng", "Đơn giá", "Giá", ""
+                "NL_ID", "Tên nguyên liệu", "Đơn vị tính", "Số lượng", "Đơn giá", "Giá", "Thao tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -405,6 +441,8 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblNguyenLieu.setRowHeight(45);
+        tblNguyenLieu.setSelectionBackground(new java.awt.Color(255, 216, 143));
         spTable.setViewportView(tblNguyenLieu);
         if (tblNguyenLieu.getColumnModel().getColumnCount() > 0) {
             tblNguyenLieu.getColumnModel().getColumn(0).setResizable(false);
