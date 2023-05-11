@@ -75,7 +75,7 @@ public class frmNhaCungCap extends javax.swing.JPanel {
                     info.add(ncc.getNCC_ID());
                     info.add(ncc.getNCC_TEN());
                     DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"NCC_ID", "NCC_TEN", "NCC_SDT", "NCC_DIACHI"});
-
+                    // TUYENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
                     model.addRow(info);
                 }
             }
