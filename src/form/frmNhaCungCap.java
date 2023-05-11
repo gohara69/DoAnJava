@@ -4,17 +4,128 @@
  */
 package form;
 
+import DAO.NhaCungCapDAO;
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+import swing.scrollbar;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
+import model.NhaCungCap;
+import swing.table;
+
 /**
  *
  * @author VU HOANG
  */
 public class frmNhaCungCap extends javax.swing.JPanel {
 
-    /**
-     * Creates new form frmNhaCungCap
-     */
     public frmNhaCungCap() {
         initComponents();
+        txtSearch1.setText("Tìm kiếm theo tên ... ");
+        txtTen.setText("");
+        txtSDT.setText("");
+        txtDC.setText("");
+        loadData();
+
+        txtSearch1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                loadDataFromSearch1();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                loadDataFromSearch1();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                loadDataFromSearch1();
+            }
+
+            public void loadDataFromSearch() {
+                clear();
+                NhaCungCap a = new NhaCungCap();
+                a.setNCC_TEN(txtSearch1.getText().trim());
+                ArrayList<NhaCungCap> dsNcc = NhaCungCapDAO.timKiemTheoTen(a);
+                for (NhaCungCap ncc : dsNcc) {
+                    Vector info = new Vector();
+                    info.add(ncc.getNCC_ID());
+                    info.add(ncc.getNCC_TEN());
+                    DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"NCC_ID", "NCC_TEN", "NCC_SDT", "NCC_DIACHI"});
+
+                    model.addRow(info);
+                }
+            }
+
+            private void loadDataFromSearch1() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+    }
+
+    public void clear() {
+        DefaultTableModel dtm = (DefaultTableModel) tblNhaCungCap.getModel();
+        dtm.setRowCount(0);
+    }
+
+    public Vector getList() {
+        Vector vt = new Vector();
+        ArrayList<NhaCungCap> dsNcc = NhaCungCapDAO.layDanhSachNhaCungCap();
+        for (NhaCungCap ncc : dsNcc) {
+            Vector info = new Vector();
+            info.add(ncc.getNCC_ID());
+            info.add(ncc.getNCC_TEN());
+            info.add(ncc.getNCC_SDT());
+            info.add(ncc.getNCC_DIACHI());
+            vt.add(info);
+        }
+        return vt;
+    }
+
+    public void loadData() {
+        Vector header = new Vector();
+        Vector info = new Vector();
+        info = getList();
+        header.add("ID");
+        header.add("Tên nhà cung cấp");
+        header.add("Số điện thoại");
+        header.add("Địa chỉ");
+        tblNhaCungCap.setModel(new DefaultTableModel(info, header));
+    }
+
+    public void showDetail(int pos) {
+        int numCol = tblNhaCungCap.getColumnCount();
+        Object[] ob = new Object[numCol];
+        for (int col = 0; col < numCol; col++) {
+            ob[col] = (tblNhaCungCap.getValueAt(pos, col));
+        }
+        txtID.setText(ob[0].toString());
+        txtTen.setText(ob[1].toString());
+        txtSDT.setText(ob[2].toString());
+        txtDC.setText(ob[3].toString());
     }
 
     /**
@@ -27,43 +138,58 @@ public class frmNhaCungCap extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel7 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        txtSearch1 = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtDC = new javax.swing.JTextField();
+        txtTen = new javax.swing.JTextField();
+        txtSDT = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblNhaCungCap = new javax.swing.JTable();
+        txtID = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
-        jButton1.setBackground(new java.awt.Color(255, 153, 102));
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Thêm");
-
-        jButton2.setBackground(new java.awt.Color(255, 153, 102));
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Xóa");
-
-        jButton3.setBackground(new java.awt.Color(255, 153, 102));
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setText("Sửa");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+        jPanel7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPanel7KeyReleased(evt);
+            }
+        });
+
+        btnAdd.setBackground(new java.awt.Color(255, 153, 102));
+        btnAdd.setForeground(new java.awt.Color(0, 0, 0));
+        btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setBackground(new java.awt.Color(255, 153, 102));
+        btnDelete.setForeground(new java.awt.Color(0, 0, 0));
+        btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnEdit.setBackground(new java.awt.Color(255, 153, 102));
+        btnEdit.setForeground(new java.awt.Color(0, 0, 0));
+        btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -75,72 +201,98 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("SDT");
 
+        tblNhaCungCap.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblNhaCungCap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblNhaCungCapMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblNhaCungCap);
+
+        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("ID");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(txtSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                .addComponent(btnAdd)
+                .addGap(96, 96, 96)
+                .addComponent(btnDelete)
+                .addGap(87, 87, 87)
+                .addComponent(btnEdit)
+                .addGap(32, 32, 32))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel3))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(96, 96, 96)
-                        .addComponent(jButton2)
-                        .addGap(87, 87, 87)
-                        .addComponent(jButton3)
-                        .addGap(32, 32, 32))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel3)))
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(txtTen)
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jTextField3)
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField2))
-                        .addContainerGap())))
+                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDC))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
-                        .addGap(32, 32, 32))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnDelete)
+                        .addComponent(btnEdit))
+                    .addComponent(txtSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)
                         .addComponent(jLabel2))
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(txtDC, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                     .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -160,20 +312,98 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        if (txtTen.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà cung cấp để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        int lastIndex = tblNhaCungCap.getRowCount();
+        try {
+            NhaCungCap ncc = new NhaCungCap();
+            ncc.setNCC_ID(Integer.valueOf(txtID.getText()));
+            ncc.setNCC_TEN(txtTen.getText().trim());
+            ncc.setNCC_SDT(txtSDT.getText());
+            ncc.setNCC_DIACHI(txtDC.getText());
+            NhaCungCapDAO.themNhaCungCap(ncc);
+            loadData();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không thêm được nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void jPanel7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel7KeyReleased
+        // TODO add your handling code here:
+        showDetail(((table) evt.getSource()).getSelectedRow());
+    }//GEN-LAST:event_jPanel7KeyReleased
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        // TODO add your handling code here:
+        showDetail(((table) evt.getSource()).getSelectedRow());
+    }//GEN-LAST:event_jPanel7MouseClicked
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int pos = tblNhaCungCap.getSelectedRow();
+        if (pos >= 0 && JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa nhà cung cấp này", "Thông báo", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.OK_OPTION) {
+            NhaCungCap ncc = new NhaCungCap();
+            int selectedID = (int) tblNhaCungCap.getValueAt(pos, 0);
+            ncc.setNCC_ID(selectedID);
+            if (NhaCungCapDAO.xoaNhaCungCap(ncc)) {
+                JOptionPane.showMessageDialog(this, "Xóa nhà cung cấp thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa nhà cung cấp không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        loadData();
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        if (txtTen.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà cung cấp để sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setNCC_ID(Integer.valueOf(txtID.getText()));
+        ncc.setNCC_TEN(txtTen.getText());
+        ncc.setNCC_SDT(txtSDT.getText());
+        ncc.setNCC_DIACHI(txtDC.getText());
+        if (NhaCungCapDAO.capNhatNhaCungCap(ncc)) {
+            JOptionPane.showMessageDialog(this, "Cập nhật nhà cung  thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật nhà cung cấp không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        loadData();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void tblNhaCungCapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhaCungCapMousePressed
+        int pos = tblNhaCungCap.getSelectedRow();
+        showDetail(pos);
+        txtID.setEnabled(false);
+    }//GEN-LAST:event_tblNhaCungCapMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblNhaCungCap;
+    private javax.swing.JTextField txtDC;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtSDT;
+    private javax.swing.JTextField txtSearch1;
+    private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
+
 }

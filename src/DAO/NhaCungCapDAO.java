@@ -38,4 +38,63 @@ public class NhaCungCapDAO {
         } 
         return dsNcc;
     }
+      public static ArrayList<NhaCungCap> timKiemTheoTen (NhaCungCap ncc) {
+        ArrayList<NhaCungCap> dsNcc = new ArrayList<NhaCungCap>();
+        try {
+            String sql = "select * from NhaCungCap where NCC_TEN like N'%" + ncc.getNCC_TEN() + "%'";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()){
+                NhaCungCap NCc = new NhaCungCap();
+                NCc.setNCC_ID(rs.getInt("NCC_ID"));
+                NCc.setNCC_DIACHI(rs.getString("NCC_DIACHI"));
+                NCc.setNCC_TEN(rs.getString("NCC_TEN"));
+                NCc.setNCC_SDT(rs.getString("NCC_SDT"));
+                dsNcc.add(NCc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsNcc;
+    }
+
+    public static boolean xoaNhaCungCap(NhaCungCap ncc) {
+        boolean kq = false;
+        String sql = String.format("Delete from NHACUNGCAP where NCC_ID = %d", ncc.getNCC_ID());
+        DataService ds = new DataService();
+        ds.open();
+        int n = ds.executeUpdate(sql);
+        if(n == 1){
+            kq = true;
+        }
+        ds.close();
+        return kq;
+    }
+
+    public static boolean themNhaCungCap(NhaCungCap ncc) {
+       boolean kq = false;
+        String sql = "INSERT INTO NHACUNGCAP (NCC_ID, NCC_TEN, NCC_DIACHI, NCC_SDT) VALUES ("+ncc.getNCC_ID()+", N'"+ncc.getNCC_TEN()+"', N'"+ncc.getNCC_DIACHI()+"', '"+ncc.getNCC_SDT()+"')";
+        DataService ds = new DataService();
+        ds.open();
+        int n = ds.executeUpdate(sql);
+        if(n == 1){
+            kq = true;
+        }
+        ds.close();
+        return kq;
+    }
+
+    public static boolean capNhatNhaCungCap(NhaCungCap ncc) {
+        boolean kq = false;
+        String sql = String.format("UPDATE NHACUNGCAP SET NCC_TEN = N'"+ncc.getNCC_TEN()+"', NCC_SDT = '"+ncc.getNCC_SDT()+"', NCC_DIACHI = N'"+ncc.getNCC_DIACHI()+"' WHERE NCC_ID = "+ncc.getNCC_ID()+"");
+        DataService ds = new DataService();
+        ds.open();
+        int n = ds.executeUpdate(sql);
+        if(n == 1){
+            kq = true;
+        }
+        ds.close();
+        return kq;
+    }
 }
