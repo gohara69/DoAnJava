@@ -28,6 +28,7 @@ public class frmNguyenLieu extends javax.swing.JPanel {
 
         btnDatNguyenLieu = new swing.button();
         btnNhapNguyenLieu = new swing.button();
+        btnHoaDonNhap = new swing.button();
 
         btnDatNguyenLieu.setText("Đặt nguyên liệu");
         btnDatNguyenLieu.addActionListener(new java.awt.event.ActionListener() {
@@ -43,12 +44,21 @@ public class frmNguyenLieu extends javax.swing.JPanel {
             }
         });
 
+        btnHoaDonNhap.setText("Hóa đơn nhập");
+        btnHoaDonNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHoaDonNhapActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(597, Short.MAX_VALUE)
+                .addContainerGap(452, Short.MAX_VALUE)
+                .addComponent(btnHoaDonNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addComponent(btnNhapNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(btnDatNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -60,7 +70,8 @@ public class frmNguyenLieu extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDatNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNhapNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNhapNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHoaDonNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(497, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -77,9 +88,16 @@ public class frmNguyenLieu extends javax.swing.JPanel {
         frm.setLocation(310, 85);
     }//GEN-LAST:event_btnNhapNguyenLieuActionPerformed
 
+    private void btnHoaDonNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonNhapActionPerformed
+        frmHoaDonNhap frm = new frmHoaDonNhap();
+        frm.setVisible(true);
+        frm.setLocation(310, 85);
+    }//GEN-LAST:event_btnHoaDonNhapActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.button btnDatNguyenLieu;
+    private swing.button btnHoaDonNhap;
     private swing.button btnNhapNguyenLieu;
     // End of variables declaration//GEN-END:variables
 }

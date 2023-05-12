@@ -66,4 +66,24 @@ public class PhieuDatDAO {
         } 
         return dsPhieuDatId;
     }
+    
+    public static ArrayList<Integer> layDsMaPhieuDatDaCoHoaDonNhan(){
+        ArrayList<Integer> dsPhieuDatId = new ArrayList<>();
+        try {
+            String sql = "select distinct PHIEUDAT.PD_ID \n" +
+                        "from PHIEUDAT, HOADONNHAP \n" +
+                        "where PHIEUDAT.PD_ID = HOADONNHAP.PD_ID";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            int id;
+            while(rs.next()) {
+                id = rs.getInt("PD_ID");
+                dsPhieuDatId.add(id);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dsPhieuDatId;
+    }
 }

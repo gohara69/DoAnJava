@@ -17,7 +17,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="597" max="32767" attributes="0"/>
+              <EmptySpace pref="452" max="32767" attributes="0"/>
+              <Component id="btnHoaDonNhap" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="btnNhapNguyenLieu" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnDatNguyenLieu" min="-2" max="-2" attributes="0"/>
@@ -32,6 +34,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDatNguyenLieu" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="btnNhapNguyenLieu" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="btnHoaDonNhap" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="497" max="32767" attributes="0"/>
           </Group>
@@ -53,6 +56,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNhapNguyenLieuActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="swing.button" name="btnHoaDonNhap">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="H&#xf3;a &#x111;&#x1a1;n nh&#x1ead;p"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHoaDonNhapActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

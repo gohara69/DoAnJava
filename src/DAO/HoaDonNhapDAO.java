@@ -7,9 +7,12 @@ package DAO;
 import DataService.DataService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.HoaDonNhap;
+import model.Mon;
+import model.PhieuDat;
 
 /**
  *
@@ -44,5 +47,49 @@ public class HoaDonNhapDAO {
         }
         ds.close();
         return kq;
+    }
+    
+    public static ArrayList<HoaDonNhap> layDanhSachTatCaHoaDonNhap() {
+        ArrayList<HoaDonNhap> dsHoaDon = new ArrayList<>();
+        try {
+            String sql = "select * from HOADONNHAP where PD_ID is not null order by HDN_ID asc";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                HoaDonNhap hd = new HoaDonNhap();
+                hd.setHDN_ID(rs.getInt("HDN_ID"));
+                hd.setHDN_NGAYNHAP(rs.getString("HDN_NGAYNHAP"));
+                hd.setHDN_THANHTIEN(rs.getFloat("HDN_THANHTIEN"));
+                hd.setNV_ID(rs.getString("NV_ID"));
+                
+                dsHoaDon.add(hd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dsHoaDon;
+    }
+    
+    public static ArrayList<HoaDonNhap> layDanhSachHoaDonNhapChoPhieuDat(PhieuDat pd) {
+        ArrayList<HoaDonNhap> dsHoaDon = new ArrayList<>();
+        try {
+            String sql = String.format("select * from HOADONNHAP where PD_ID = %d order by HDN_ID asc", pd.getPD_ID());
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                HoaDonNhap hd = new HoaDonNhap();
+                hd.setHDN_ID(rs.getInt("HDN_ID"));
+                hd.setHDN_NGAYNHAP(rs.getString("HDN_NGAYNHAP"));
+                hd.setHDN_THANHTIEN(rs.getFloat("HDN_THANHTIEN"));
+                hd.setNV_ID(rs.getString("NV_ID"));
+                
+                dsHoaDon.add(hd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dsHoaDon;
     }
 }
