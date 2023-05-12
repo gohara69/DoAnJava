@@ -24,12 +24,12 @@ import javax.swing.JScrollPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import pojo.ChiTietNhap;
-import pojo.ChiTietPhieuDat;
-import pojo.ComboBoxItem;
-import pojo.HoaDonNhap;
-import pojo.NguyenLieu;
-import pojo.PhieuDat;
+import model.ChiTietNhap;
+import model.ChiTietPhieuDat;
+import model.ComboBoxItem;
+import model.HoaDonNhap;
+import model.NguyenLieu;
+import model.PhieuDat;
 import swing.scrollbar;
 import swing.tableActionCellEditor;
 import swing.tableActionEvent;
@@ -66,7 +66,8 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
         txtMaHoaDon.setText(HoaDonNhapDAO.layMaHoaDonNhapTiepTheo() + "");
         txtNhanVien.setText("Nguyễn Hoàng Ann");
         txtThanhTien.setText("");
-        
+        txtThanhTien.setHint("");
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
         LocalDate now = LocalDate.now();  
         txtNgayNhap.setText(now + "");
@@ -413,15 +414,14 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
                 if(!ChiTietNhapDAO.themCTPhieuNhap(ctn)){
                     JOptionPane.showMessageDialog(this, "Không thể thêm mới chi tiết phiếu nhập", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Nhập nguyên liệu thành công", "Thông báo", JOptionPane.OK_OPTION);
-                    cboMaDatHang.removeItemListener(listener);
-                    loadDataToCombobox();
-                    cboMaDatHang.addItemListener(listener);
-                    txtThanhTien.setText("");
-                    txtMaHoaDon.setText(HoaDonNhapDAO.layMaHoaDonNhapTiepTheo() + "");
                 }
             }
+            JOptionPane.showMessageDialog(this, "Nhập nguyên liệu thành công", "Thông báo", JOptionPane.OK_OPTION);
+            cboMaDatHang.removeItemListener(listener);
+            loadDataToCombobox();
+            cboMaDatHang.addItemListener(listener);
+            txtThanhTien.setText("");
+            txtMaHoaDon.setText(HoaDonNhapDAO.layMaHoaDonNhapTiepTheo() + "");
         } else {
             JOptionPane.showMessageDialog(this, "Không thể thêm mới hóa đơn nhập", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;

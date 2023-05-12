@@ -6,7 +6,7 @@ package DAO;
 
 import DataService.DataService;
 import java.util.ArrayList;
-import pojo.PhieuDat;
+import model.PhieuDat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

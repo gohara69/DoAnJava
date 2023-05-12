@@ -6,8 +6,8 @@ package DAO;
 
 import DataService.DataService;
 import java.util.ArrayList;
-import pojo.ChiTietPhieuDat;
-import pojo.PhieuDat;
+import model.ChiTietPhieuDat;
+import model.PhieuDat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

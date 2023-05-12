@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pojo.ChiTietNhap;
-import pojo.ChiTietPhieuDat;
-import pojo.Mon;
-import pojo.PhieuDat;
+import model.ChiTietNhap;
+import model.ChiTietPhieuDat;
+import model.Mon;
+import model.PhieuDat;
 
 /**
  *

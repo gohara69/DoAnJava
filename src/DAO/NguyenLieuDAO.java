@@ -6,12 +6,12 @@ package DAO;
 
 import DataService.DataService;
 import java.util.ArrayList;
-import pojo.NguyenLieu;
+import model.NguyenLieu;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pojo.NhaCungCap;
+import model.NhaCungCap;
 
 /**
  *

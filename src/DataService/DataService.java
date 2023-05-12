@@ -28,7 +28,7 @@ public class DataService {
 
         //Tuyền
 //        String strServer = "LAPTOP-0LI9CK71";
-//        String strDatabase = "QL_QuanMiCay";
+//        String strDatabase = "QL_QuanMiCay (1)";
 //        String strUser = "ngoctuyen";
 //        String strPassword = "1234";
 
