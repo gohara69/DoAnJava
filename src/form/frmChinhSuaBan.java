@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import model.Ban;
+import pojo.Ban;
 import swing.scrollbar;
 import swing.table;
 

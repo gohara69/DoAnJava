@@ -17,8 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DanhMuc;
-import model.Mon;
+import pojo.DanhMuc;
+import pojo.Mon;
 
 /**
  *

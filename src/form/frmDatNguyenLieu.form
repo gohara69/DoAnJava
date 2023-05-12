@@ -277,7 +277,7 @@
         </Container>
         <Component class="swing.button" name="btnNhapNguyenLieu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p nguy&#xea;n li&#x1ec7;u"/>
+            <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t nguy&#xea;n li&#x1ec7;u"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNhapNguyenLieuActionPerformed"/>

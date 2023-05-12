@@ -6,11 +6,12 @@ package DAO;
 
 import DataService.DataService;
 import java.util.ArrayList;
-import model.NhaCungCap;
+import pojo.NhaCungCap;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pojo.PhieuDat;
 
 /**
  *
@@ -38,4 +39,22 @@ public class NhaCungCapDAO {
         } 
         return dsNcc;
     }
+     
+     public static String layTenNhaCungCapTheoMaPhieuDat(PhieuDat pd){
+         String kq = "";
+         try {
+            String sql = "select NCC_TEN\n" +
+                        " from NHACUNGCAP ncc, PHIEUDAT pd\n" +
+                        " where ncc.NCC_ID = pd.NCC_ID and PD_ID = " + pd.getPD_ID();
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                kq = rs.getString("NCC_TEN");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return kq;
+     }
 }

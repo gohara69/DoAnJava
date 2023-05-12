@@ -11,7 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.BorderFactory;
-import model.model_menu;
+import pojo.model_menu;
 
 /**
  *

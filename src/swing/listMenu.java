@@ -15,7 +15,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
-import model.model_menu;
+import pojo.model_menu;
 
 /**
  *

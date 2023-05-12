@@ -5,7 +5,13 @@
 package DAO;
 
 import DataService.DataService;
-import model.ChiTietPhieuDat;
+import java.util.ArrayList;
+import pojo.ChiTietPhieuDat;
+import pojo.PhieuDat;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,5 +30,28 @@ public class ChiTietPhieuDatDAO {
         }
         ds.close();
         return kq;
+    }
+    
+    public static ArrayList<ChiTietPhieuDat> layDsChiTietPDCuaPhieuDat(PhieuDat pd){
+        ArrayList<ChiTietPhieuDat> dsCTPD = new ArrayList<>();
+        try {
+            String sql = "select *\n" +
+                        "from CTPHIEUDAT where PD_ID = " + pd.getPD_ID();
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                ChiTietPhieuDat ctpd = new ChiTietPhieuDat();
+                ctpd.setNL_ID(rs.getInt("NL_ID"));
+                ctpd.setPD_ID(rs.getInt("PD_ID"));
+                ctpd.setSOLUONG(rs.getInt("SOLUONG"));
+                ctpd.setDAGIAO(rs.getInt("DAGIAO"));
+
+                dsCTPD.add(ctpd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dsCTPD;
     }
 }

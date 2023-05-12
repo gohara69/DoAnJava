@@ -6,7 +6,7 @@ package DAO;
 
 import DataService.DataService;
 import java.util.ArrayList;
-import model.PhieuDat;
+import pojo.PhieuDat;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -47,5 +47,23 @@ public class PhieuDatDAO {
             Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return id + 1;
+    }
+    
+    public static ArrayList<Integer> layDsMaPhieuDatChuaGiaoDu(){
+        ArrayList<Integer> dsPhieuDatId = new ArrayList<>();
+        try {
+            String sql = "SELECT PD_ID FROM PHIEUDAT WHERE PD_TRANGTHAI = 0";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            int id;
+            while(rs.next()) {
+                id = rs.getInt("PD_ID");
+                dsPhieuDatId.add(id);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dsPhieuDatId;
     }
 }

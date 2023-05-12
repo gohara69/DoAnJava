@@ -68,13 +68,13 @@ public class frmNguyenLieu extends javax.swing.JPanel {
     private void btnDatNguyenLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatNguyenLieuActionPerformed
         frmDatNguyenLieu frm = new frmDatNguyenLieu();
         frm.setVisible(true);
-        frm.setLocation(320, 82);
+        frm.setLocation(310, 85);
     }//GEN-LAST:event_btnDatNguyenLieuActionPerformed
 
     private void btnNhapNguyenLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapNguyenLieuActionPerformed
         frmNhapNguyenLieu frm = new frmNhapNguyenLieu();
         frm.setVisible(true);
-        frm.setLocation(320, 82);
+        frm.setLocation(310, 85);
     }//GEN-LAST:event_btnNhapNguyenLieuActionPerformed
 
 

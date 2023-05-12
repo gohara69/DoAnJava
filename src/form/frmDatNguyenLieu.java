@@ -28,11 +28,11 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import model.ComboBoxItem;
-import model.NguyenLieu;
-import model.NhaCungCap;
-import model.PhieuDat;
-import model.ChiTietPhieuDat;
+import pojo.ComboBoxItem;
+import pojo.NguyenLieu;
+import pojo.NhaCungCap;
+import pojo.PhieuDat;
+import pojo.ChiTietPhieuDat;
 import swing.button;
 import swing.combobox;
 import swing.scrollbar;
@@ -79,7 +79,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         txtTenNhanVien.setHint("");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
         LocalDate now = LocalDate.now();  
-        txtNgayNhap.setHint(now + "");
+        txtNgayNhap.setText(now + "");
         txtThanhTien.setHint("");
         tblNguyenLieu.getModel().addTableModelListener(modelTableListener);
         txtTenNhanVien.setText("Nguyễn Hữu Hòa");
@@ -476,7 +476,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnNhapNguyenLieu.setText("Nhập nguyên liệu");
+        btnNhapNguyenLieu.setText("Đặt nguyên liệu");
         btnNhapNguyenLieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNhapNguyenLieuActionPerformed(evt);

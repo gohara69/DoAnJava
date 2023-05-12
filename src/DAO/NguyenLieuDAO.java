@@ -6,12 +6,12 @@ package DAO;
 
 import DataService.DataService;
 import java.util.ArrayList;
-import model.NguyenLieu;
+import pojo.NguyenLieu;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.NhaCungCap;
+import pojo.NhaCungCap;
 
 /**
  *
@@ -57,6 +57,27 @@ public class NguyenLieuDAO {
             Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public static NguyenLieu searchIngredientById (NguyenLieu nl) {
+        NguyenLieu a = new NguyenLieu();
+        try {
+            String sql = "select nl.NL_ID, NL_TEN, NL_DONVITINH, NL_GIA \n" +
+                        "from NGUYENLIEU nl, GIANGUYENLIEU gnl \n" +
+                        "where nl.NL_ID = gnl.NL_ID and nl.NL_ID = " + nl.getNL_ID();
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()){
+                a.setNL_DONVITINH(rs.getString("NL_DONVITINH"));
+                a.setNL_GIA(rs.getFloat("NL_GIA"));
+                a.setNL_ID(rs.getInt("NL_ID"));
+                a.setNL_TEN(rs.getString("NL_TEN"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
     }
     
     public static ArrayList<Integer> searchIngredientByNCCId (NhaCungCap ncc) {

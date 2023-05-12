@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-import model.DanhMuc;
+import pojo.DanhMuc;
 import swing.table;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
