@@ -4,13 +4,17 @@
  */
 package form;
 
+import DAO.chartDAO;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableColumn;
+import model.chartModel;
 import model.model_card;
+import swing.modelChart;
 
 /**
  *
@@ -23,10 +27,10 @@ public class frmDoanhThu extends javax.swing.JPanel {
      */
     public frmDoanhThu() {
         initComponents();
-        card1.setData(new model_card(new ImageIcon("/icon/save-money.png"), "Doanh thu", "32.000.000 triệu đồng", "Tăng 30% so với tháng trước"));
-        card2.setData(new model_card(new ImageIcon("/icon/food.png"), "Giá nguyên liệu", "32.000.000 triệu đồng", "Tăng 30% so với tháng trước"));
-        card3.setData(new model_card(new ImageIcon("/icon/employee.png"), "Tổng lượt khách", "3.000.000", "Tăng 30% so với tháng trước"));
-   
+        chart.addLegend("Chi phí", Color.decode("#e65c00"), Color.decode("#F9D423"));
+        chart.addLegend("Lợi nhuận", Color.decode("#7b4397"), Color.decode("#dc2430"));
+        setDataToChart();
+
         //Tạo table bằng cách kéo table.java từ package swing vào giao diện
         
         //Header tự chỉnh thủ công: Click chuột trái vào table chọn table contents
@@ -52,6 +56,17 @@ public class frmDoanhThu extends javax.swing.JPanel {
         table1.addRow(info);
         table1.addRow(info);
     }
+    
+    public void setDataToChart(){
+        ArrayList<chartModel> listChartModel = chartDAO.getListChartModel();
+
+        chart.clear();
+        for (int i = listChartModel.size() - 1 ; i >= 0 ; i--) {
+            chartModel d = listChartModel.get(i);
+            chart.addData(new modelChart(d.getMonth(), new double[]{d.getCost(), d.getProfit()}));
+        }
+        chart.start();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,27 +77,11 @@ public class frmDoanhThu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        card1 = new component.card();
-        card2 = new component.card();
-        card3 = new component.card();
         panelBorder1 = new swing.panelBorder();
         spTable = new javax.swing.JScrollPane();
         table1 = new swing.table();
-
-        jLayeredPane1.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
-
-        card1.setColor1(new java.awt.Color(102, 255, 102));
-        card1.setColor2(new java.awt.Color(102, 255, 153));
-        jLayeredPane1.add(card1);
-
-        card2.setColor1(new java.awt.Color(255, 255, 51));
-        card2.setColor2(new java.awt.Color(255, 204, 51));
-        jLayeredPane1.add(card2);
-
-        card3.setColor1(new java.awt.Color(255, 0, 0));
-        card3.setColor2(new java.awt.Color(255, 102, 0));
-        jLayeredPane1.add(card3);
+        panelShadow1 = new swing.panelShadow();
+        chart = new swing.curveLineChart();
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -123,35 +122,55 @@ public class frmDoanhThu extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        chart.setBackground(new java.awt.Color(255, 255, 255));
+        chart.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        chart.setTitleColor(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout panelShadow1Layout = new javax.swing.GroupLayout(panelShadow1);
+        panelShadow1.setLayout(panelShadow1Layout);
+        panelShadow1Layout.setHorizontalGroup(
+            panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelShadow1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        panelShadow1Layout.setVerticalGroup(
+            panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelShadow1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 891, Short.MAX_VALUE))
+                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(panelShadow1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private component.card card1;
-    private component.card card2;
-    private component.card card3;
-    private javax.swing.JLayeredPane jLayeredPane1;
+    private swing.curveLineChart chart;
     private swing.panelBorder panelBorder1;
+    private swing.panelShadow panelShadow1;
     private javax.swing.JScrollPane spTable;
     private swing.table table1;
     // End of variables declaration//GEN-END:variables
