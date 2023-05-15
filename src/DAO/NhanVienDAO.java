@@ -38,7 +38,7 @@ public class NhanVienDAO {
                 dsNv.add(nv);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(NhaCungCapDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return dsNv;
     }
@@ -100,7 +100,7 @@ public class NhanVienDAO {
         String sql = "INSERT INTO NHANVIEN (NV_ID, NV_TEN,NV_GIOITINH,NV_NGAYSINH, NV_DIACHI, NV_SDT, NV_TINHTRANG) VALUES ('"+nv.getNV_ID()+"', N'"+nv.getNV_TEN()+"','"+nv.getNV_GIOITINH()+"','"+nv.getNV_NGAYSINH()+"', N'"+nv.getNV_DIACHI()+"',  '"+nv.getNV_SDT()+"',N'"+nv.getNV_TINHTRANG()+"')";
         DataService ds = new DataService();
         ds.open();
-        int n = ds.executeUpdate(sql);
+            int n = ds.executeUpdate(sql);
         if(n == 1){
             kq = true;
         }
