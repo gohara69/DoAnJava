@@ -18,6 +18,50 @@ import model.NhaCungCap;
  * @author VU HOANG
  */
 public class NguyenLieuDAO {
+     public static ArrayList<NguyenLieu> layDanhSach() {
+        ArrayList<NguyenLieu> dsNl = new ArrayList<>();
+   
+        try {
+            String sql = "SELECT * FROM NGUYENLIEU";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                NguyenLieu nl = new NguyenLieu();
+                nl.setNL_ID(rs.getInt("NL_ID"));
+                nl.setNL_TEN(rs.getString("NL_TEN"));
+                nl.setNL_DONVITINH(rs.getString("NL_DONVITINH"));
+                nl.setNL_SOLUONG(rs.getInt("NL_SOLUONG"));
+               
+               
+             
+                dsNl.add(nl);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NguyenLieuDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dsNl;
+    }
+     public static ArrayList<NguyenLieu> timKiemTenNL (NguyenLieu nl) {
+        ArrayList<NguyenLieu> dsNl = new ArrayList<NguyenLieu>();
+        try {
+            String sql = "select * from NGUYENLIEU where NL_TEN like N'%" + nl.getNL_TEN() + "%'";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()){
+                NguyenLieu Nl = new NguyenLieu();
+                Nl.setNL_ID(rs.getInt("NL_ID"));
+                Nl.setNL_TEN(rs.getString("NL_TEN"));
+                Nl.setNL_DONVITINH(rs.getString("NL_DONVITINH"));
+                Nl.setNL_SOLUONG(rs.getInt("NL_SOLUONG"));
+                dsNl.add(Nl);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NguyenLieuDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsNl;
+    }
 //    public static ArrayList<NguyenLieu> searchIngredientById (NguyenLieu nl, int nccId) {
 //        ArrayList<NguyenLieu> dsdm = new ArrayList<>();
 //        try {

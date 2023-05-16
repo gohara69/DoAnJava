@@ -5,33 +5,18 @@
 package form;
 
 import DAO.NhaCungCapDAO;
-import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 import swing.scrollbar;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-
 import model.NhaCungCap;
 import swing.table;
 
@@ -40,10 +25,17 @@ import swing.table;
  * @author VU HOANG
  */
 public class frmNhaCungCap extends javax.swing.JPanel {
+     Vector data = new Vector();
 
     public frmNhaCungCap() {
         initComponents();
-        txtSearch1.setText("Tìm kiếm theo tên ... ");
+        ///////
+        sptable.setVerticalScrollBar(new scrollbar());
+        sptable.getViewport().setBackground(Color.WHITE);
+        JPanel p = new JPanel();
+        sptable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        sptable.setVerticalScrollBar(new scrollbar());
+        txtID.setText("");
         txtTen.setText("");
         txtSDT.setText("");
         txtDC.setText("");
@@ -52,21 +44,22 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         txtSearch1.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                loadDataFromSearch1();
+                loadDataFromSearch();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                loadDataFromSearch1();
+                loadDataFromSearch();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                loadDataFromSearch1();
+                loadDataFromSearch();
             }
 
             public void loadDataFromSearch() {
-                clear();
+             clear();
+                data.removeAllElements();
                 NhaCungCap a = new NhaCungCap();
                 a.setNCC_TEN(txtSearch1.getText().trim());
                 ArrayList<NhaCungCap> dsNcc = NhaCungCapDAO.timKiemTheoTen(a);
@@ -74,25 +67,23 @@ public class frmNhaCungCap extends javax.swing.JPanel {
                     Vector info = new Vector();
                     info.add(ncc.getNCC_ID());
                     info.add(ncc.getNCC_TEN());
-                    DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"NCC_ID", "NCC_TEN", "NCC_SDT", "NCC_DIACHI"});
-                    // TUYENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-                    model.addRow(info);
+                    info.add(ncc.getNCC_DIACHI());
+                    info.add(ncc.getNCC_SDT());
+                    data.add(info);
+                    tblNhaCungCap.addRow(info);
                 }
             }
-
-            private void loadDataFromSearch1() {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
+                 
         });
+             
     }
-
     public void clear() {
         DefaultTableModel dtm = (DefaultTableModel) tblNhaCungCap.getModel();
         dtm.setRowCount(0);
     }
-
-    public Vector getList() {
-        Vector vt = new Vector();
+    public void loadData() {
+        clear();
+        data.removeAllElements();
         ArrayList<NhaCungCap> dsNcc = NhaCungCapDAO.layDanhSachNhaCungCap();
         for (NhaCungCap ncc : dsNcc) {
             Vector info = new Vector();
@@ -100,32 +91,17 @@ public class frmNhaCungCap extends javax.swing.JPanel {
             info.add(ncc.getNCC_TEN());
             info.add(ncc.getNCC_SDT());
             info.add(ncc.getNCC_DIACHI());
-            vt.add(info);
+            tblNhaCungCap.addRow(info);
+            data.add(info);
         }
-        return vt;
-    }
-
-    public void loadData() {
-        Vector header = new Vector();
-        Vector info = new Vector();
-        info = getList();
-        header.add("ID");
-        header.add("Tên nhà cung cấp");
-        header.add("Số điện thoại");
-        header.add("Địa chỉ");
-        tblNhaCungCap.setModel(new DefaultTableModel(info, header));
     }
 
     public void showDetail(int pos) {
-        int numCol = tblNhaCungCap.getColumnCount();
-        Object[] ob = new Object[numCol];
-        for (int col = 0; col < numCol; col++) {
-            ob[col] = (tblNhaCungCap.getValueAt(pos, col));
-        }
-        txtID.setText(ob[0].toString());
-        txtTen.setText(ob[1].toString());
-        txtSDT.setText(ob[2].toString());
-        txtDC.setText(ob[3].toString());
+        Vector info = (Vector) data.get(tblNhaCungCap.getSelectedRow());
+        txtID.setText(info.get(0).toString());
+        txtTen.setText(info.get(1).toString());
+        txtSDT.setText(info.get(2).toString());
+        txtDC.setText(info.get(3).toString());
     }
 
     /**
@@ -148,12 +124,13 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         txtDC = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
         txtSDT = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblNhaCungCap = new javax.swing.JTable();
         txtID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        sptable = new javax.swing.JScrollPane();
+        tblNhaCungCap = new swing.table();
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
         jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel7MouseClicked(evt);
@@ -202,6 +179,10 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("SDT :");
 
+        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("ID :");
+
         tblNhaCungCap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -210,19 +191,40 @@ public class frmNhaCungCap extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "NCC_ID", "NCC_Tên", "NCC_SDT", "NCC_DiaChi"
             }
         ));
         tblNhaCungCap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNhaCungCapMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tblNhaCungCapMousePressed(evt);
             }
         });
-        jScrollPane2.setViewportView(tblNhaCungCap);
+        tblNhaCungCap.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblNhaCungCapKeyReleased(evt);
+            }
+        });
+        sptable.setViewportView(tblNhaCungCap);
 
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("ID :");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sptable)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sptable, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -238,10 +240,6 @@ public class frmNhaCungCap extends javax.swing.JPanel {
                 .addGap(87, 87, 87)
                 .addComponent(btnEdit)
                 .addGap(32, 32, 32))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -264,6 +262,10 @@ public class frmNhaCungCap extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDC))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -291,8 +293,8 @@ public class frmNhaCungCap extends javax.swing.JPanel {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDC, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -307,9 +309,9 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 17, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -382,7 +384,18 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         loadData();
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void tblNhaCungCapKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblNhaCungCapKeyReleased
+        // TODO add your handling code here:
+         showDetail(((table) evt.getSource()).getSelectedRow());
+    }//GEN-LAST:event_tblNhaCungCapKeyReleased
+
+    private void tblNhaCungCapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhaCungCapMouseClicked
+        // TODO add your handling code here:
+         showDetail(((table) evt.getSource()).getSelectedRow());
+    }//GEN-LAST:event_tblNhaCungCapMouseClicked
+
     private void tblNhaCungCapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhaCungCapMousePressed
+        // TODO add your handling code here:
         int pos = tblNhaCungCap.getSelectedRow();
         showDetail(pos);
         txtID.setEnabled(false);
@@ -397,9 +410,10 @@ public class frmNhaCungCap extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblNhaCungCap;
+    private javax.swing.JScrollPane sptable;
+    private swing.table tblNhaCungCap;
     private javax.swing.JTextField txtDC;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtSDT;
