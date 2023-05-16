@@ -14,7 +14,7 @@ public class NhanVien {
     private String NV_ID;
     private String QA_DIACHI;
     private String NV_TEN;
-    private String NV_GIOITINH;
+    private Boolean NV_GIOITINH;
     private String NV_NGAYSINH;
     private String NV_DIACHI;
     private String NV_SDT;
@@ -23,7 +23,7 @@ public class NhanVien {
     public NhanVien(){
     }
     
-    public NhanVien(String NV_ID, String QA_DIACHI, String NV_TEN,String NV_GIOITINH,String NV_NGAYSINH, String NV_DIACHI,String NV_SDT,String NV_IMG,String NV_TINHTRANG) {
+    public NhanVien(String NV_ID, String QA_DIACHI, String NV_TEN,Boolean NV_GIOITINH,String NV_NGAYSINH, String NV_DIACHI,String NV_SDT,String NV_IMG,String NV_TINHTRANG) {
         this.NV_ID= NV_ID;
         this.QA_DIACHI = QA_DIACHI;
         this.NV_TEN = NV_TEN;
@@ -59,11 +59,11 @@ public class NhanVien {
         this.NV_TEN = NV_TEN;
     }
 
-    public String getNV_GIOITINH() {
+    public Boolean getNV_GIOITINH() {
         return NV_GIOITINH;
     }
 
-    public void setNV_GIOITINH(String NV_GIOITINH) {
+    public void setNV_GIOITINH(Boolean NV_GIOITINH) {
         this.NV_GIOITINH = NV_GIOITINH;
     }
 
