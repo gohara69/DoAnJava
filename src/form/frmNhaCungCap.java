@@ -153,6 +153,7 @@ public class frmNhaCungCap extends javax.swing.JPanel {
         txtID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
 
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel7MouseClicked(evt);
@@ -193,13 +194,13 @@ public class frmNhaCungCap extends javax.swing.JPanel {
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Tên NCC");
+        jLabel2.setText("Tên NCC :");
 
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Địa chỉ");
+        jLabel3.setText("Địa Chỉ :");
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("SDT");
+        jLabel4.setText("SDT :");
 
         tblNhaCungCap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -221,7 +222,7 @@ public class frmNhaCungCap extends javax.swing.JPanel {
 
         jLabel5.setBackground(new java.awt.Color(204, 204, 204));
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("ID");
+        jLabel5.setText("ID :");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
