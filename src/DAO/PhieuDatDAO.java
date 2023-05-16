@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.NguoiDung;
+import model.TaiKhoan;
 
 
 /**
@@ -18,11 +20,26 @@ import java.util.logging.Logger;
  * @author VU HOANG
  */
 public class PhieuDatDAO {
+    //public static NguoiDung nguoiDung = TaiKhoanDAO.layNguoiDungTheoTaiKhoan(main.main.tkhoan);
+//    public static boolean themPhieuNhap(PhieuDat pd){
+//        boolean kq = false;
+//        String sql = String.format("insert into PHIEUDAT(NV_ID, NCC_ID, PD_DATE, PD_TRANGTHAI)\n" +
+//                                   "values('%s',%d,'%s',0)", pd.getNV_ID(), pd.getNCC_ID(), pd.getPD_DATE());
+//        DataService ds = new DataService();
+//        ds.open();
+//        int n = ds.executeUpdate(sql);
+//        if(n == 1){
+//            kq = true;
+//        }
+//        ds.close();
+//        return kq;
+//    }
+    
     public static boolean themPhieuNhap(PhieuDat pd){
         boolean kq = false;
         String sql = String.format("insert into PHIEUDAT(NV_ID, NCC_ID, PD_DATE, PD_TRANGTHAI)\n" +
                                    "values('%s',%d,'%s',0)", pd.getNV_ID(), pd.getNCC_ID(), pd.getPD_DATE());
-        DataService ds = new DataService();
+        DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);
         if(n == 1){
@@ -32,12 +49,27 @@ public class PhieuDatDAO {
         return kq;
     }
     
+//    public static int layMaPhieuDatTiepTheo(){
+//        int id = 0;
+//        try {
+//            String sql = "Select TOP 1 PD_ID from PHIEUDAT order by PD_ID desc";
+//            DataService ds = new DataService();
+//            ds.open();
+//            ResultSet rs = ds.executeQuery(sql);
+//            while(rs.next()) {
+//                id = rs.getInt("PD_ID");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } 
+//        return id + 1;
+//    }
+    
     public static int layMaPhieuDatTiepTheo(){
-        ArrayList<PhieuDat> dspd = new ArrayList<PhieuDat>();
         int id = 0;
         try {
             String sql = "Select TOP 1 PD_ID from PHIEUDAT order by PD_ID desc";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {
@@ -53,7 +85,7 @@ public class PhieuDatDAO {
         ArrayList<Integer> dsPhieuDatId = new ArrayList<>();
         try {
             String sql = "SELECT PD_ID FROM PHIEUDAT WHERE PD_TRANGTHAI = 0";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             int id;
@@ -73,7 +105,7 @@ public class PhieuDatDAO {
             String sql = "select distinct PHIEUDAT.PD_ID \n" +
                         "from PHIEUDAT, HOADONNHAP \n" +
                         "where PHIEUDAT.PD_ID = HOADONNHAP.PD_ID";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             int id;

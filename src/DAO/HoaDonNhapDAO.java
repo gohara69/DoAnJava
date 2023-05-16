@@ -23,7 +23,7 @@ public class HoaDonNhapDAO {
         int id = 0;
         try {
             String sql = "Select TOP 1 HDN_ID from HOADONNHAP order by HDN_ID desc";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {
@@ -39,7 +39,7 @@ public class HoaDonNhapDAO {
         boolean kq = false;
         String sql = String.format("insert into HOADONNHAP " + 
                                     "values(%d,'%s',GETDATE(),0,%d)", hd.getHDN_ID(), hd.getNV_ID(), hd.getPD_ID());
-        DataService ds = new DataService();
+        DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);
         if(n == 1){

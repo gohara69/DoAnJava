@@ -23,7 +23,7 @@ public class button extends JButton{
         setBackground(new Color(255,69,0));
         colorOver = new Color(255, 100, 36);
         colorClick = new Color(255, 129, 64);
-        colorBorder = new Color(255, 158, 90);
+        colorBorder = new Color(255,69,0);
         Font myFont1 = new Font("Serif", Font.BOLD, 14);
         this.setFont(myFont1);
         setForeground(Color.WHITE);

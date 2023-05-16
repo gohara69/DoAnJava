@@ -9,6 +9,7 @@ import DAO.ChiTietPhieuDatDAO;
 import DAO.HoaDonNhapDAO;
 import DAO.NguyenLieuDAO;
 import DAO.NhaCungCapDAO;
+import DAO.NhanVienDAO;
 import DAO.PhieuDatDAO;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
@@ -29,7 +30,9 @@ import model.ChiTietPhieuDat;
 import model.ComboBoxItem;
 import model.HoaDonNhap;
 import model.NguyenLieu;
+import model.NhanVien;
 import model.PhieuDat;
+import model.TaiKhoan;
 import swing.scrollbar;
 import swing.tableActionCellEditor;
 import swing.tableActionEvent;
@@ -43,6 +46,8 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
 
     Vector data = new Vector();
     ItemListener listener;
+    TaiKhoan taiKhoan = main.main.tkhoan;
+    NhanVien nhanVien = NhanVienDAO.layNhanVienTheoTaiKhoan(taiKhoan);
     TableModelListener modelTableListener = new TableModelListener(){
         @Override
         public void tableChanged(TableModelEvent e) {
@@ -64,7 +69,7 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
         txtMaHoaDon.setText(HoaDonNhapDAO.layMaHoaDonNhapTiepTheo() + "");
-        txtNhanVien.setText("Nguyễn Hoàng Ann");
+        txtNhanVien.setText(nhanVien.getNV_TEN());
         txtThanhTien.setText("");
         txtThanhTien.setHint("");
 

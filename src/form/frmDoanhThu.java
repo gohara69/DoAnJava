@@ -61,7 +61,7 @@ public class frmDoanhThu extends javax.swing.JPanel {
         ArrayList<chartModel> listChartModel = chartDAO.getListChartModel();
 
         chart.clear();
-        for (int i = listChartModel.size() - 1 ; i >= 0 ; i--) {
+        for (int i = 0 ; i < listChartModel.size() ; i++) {
             chartModel d = listChartModel.get(i);
             chart.addData(new modelChart(d.getMonth(), new double[]{d.getCost(), d.getProfit()}));
         }

@@ -8,6 +8,8 @@ import DAO.NguyenLieuDAO;
 import DAO.NhaCungCapDAO;
 import DAO.PhieuDatDAO;
 import DAO.ChiTietPhieuDatDAO;
+import DAO.NhanVienDAO;
+import DAO.PhanQuyenDAO;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -33,6 +35,8 @@ import model.NguyenLieu;
 import model.NhaCungCap;
 import model.PhieuDat;
 import model.ChiTietPhieuDat;
+import model.NhanVien;
+import model.TaiKhoan;
 import swing.button;
 import swing.combobox;
 import swing.scrollbar;
@@ -48,6 +52,8 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
     Vector data = new Vector();
     Vector dataId = new Vector();
     tableActionEvent event;
+    TaiKhoan taiKhoan = main.main.tkhoan;
+    NhanVien nhanVien = NhanVienDAO.layNhanVienTheoTaiKhoan(taiKhoan);
     TableModelListener modelTableListener = new TableModelListener(){
         @Override
         public void tableChanged(TableModelEvent e) {
@@ -82,7 +88,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         txtNgayNhap.setText(now + "");
         txtThanhTien.setHint("");
         tblNguyenLieu.getModel().addTableModelListener(modelTableListener);
-        txtTenNhanVien.setText("Nguyễn Hữu Hòa");
+        txtTenNhanVien.setText(nhanVien.getNV_TEN());
         txtPhieuDatId.setText(PhieuDatDAO.layMaPhieuDatTiepTheo() + "");
         
         cboNhaCungCap.removeAllItems();
@@ -301,8 +307,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         PhieuDat pd = new PhieuDat();
         int nccId = ((ComboBoxItem)cboNhaCungCap.getSelectedItem()).getKey();
         pd.setNCC_ID(nccId);
-        //Tạm thời gán cứng cho nhân viên id
-        pd.setNV_ID("PV002");
+        pd.setNV_ID(nhanVien.getNV_ID());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
         LocalDate now = LocalDate.now();  
         pd.setPD_DATE("" + now);
@@ -320,7 +325,6 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
                     int soluong = Integer.parseInt((String) b.get(3)) + Integer.parseInt((String)a.get(3));
                     a.set(3, soluong + "");
                     a.set(5, soluong * Float.parseFloat(a.get(4).toString()));
-                    System.out.println(a.get(5));
                     data.remove(b);
                     j--;
                 }
@@ -578,8 +582,12 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
             return;
         }
         
-        themPhieuDat();
-        themChiTietPhieuDat();
+        if(PhanQuyenDAO.kiemTraCoQuyenDatNguyenLieu(main.main.tkhoan)){
+            themPhieuDat();
+            themChiTietPhieuDat();
+        } else {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền đặt nguyên liệu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
         clearAll();
     }//GEN-LAST:event_btnNhapNguyenLieuActionPerformed
     /**

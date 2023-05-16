@@ -195,6 +195,7 @@ public class frmChinhSuaBan extends javax.swing.JFrame {
         panelBorder1.add(txtTenBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 410, -1));
 
         btnXoa.setText("Xóa");
+        btnXoa.setBorderColor(new java.awt.Color(255, 69, 0));
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
@@ -203,6 +204,7 @@ public class frmChinhSuaBan extends javax.swing.JFrame {
         panelBorder1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, -1, 30));
 
         btnThem.setText("Thêm");
+        btnThem.setBorderColor(new java.awt.Color(255, 69, 0));
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
@@ -211,6 +213,7 @@ public class frmChinhSuaBan extends javax.swing.JFrame {
         panelBorder1.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, -1, 30));
 
         btnSua.setText("Sửa");
+        btnSua.setBorderColor(new java.awt.Color(255, 69, 0));
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);

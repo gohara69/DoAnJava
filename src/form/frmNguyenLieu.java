@@ -4,12 +4,16 @@
  */
 package form;
 
+import DAO.PhanQuyenDAO;
+import javax.swing.JOptionPane;
+import model.TaiKhoan;
+
 /**
  *
  * @author VU HOANG
  */
 public class frmNguyenLieu extends javax.swing.JPanel {
-
+    TaiKhoan tk = main.main.tkhoan;
     /**
      * Creates new form frmNguyenLieu
      */
@@ -77,21 +81,36 @@ public class frmNguyenLieu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDatNguyenLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatNguyenLieuActionPerformed
-        frmDatNguyenLieu frm = new frmDatNguyenLieu();
-        frm.setVisible(true);
-        frm.setLocation(310, 85);
+        if(PhanQuyenDAO.kiemTraCoQuyenDatNguyenLieu(tk)){
+            frmDatNguyenLieu frm = new frmDatNguyenLieu();
+            frm.setVisible(true);
+            frm.setLocation(310, 85);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnDatNguyenLieuActionPerformed
 
     private void btnNhapNguyenLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapNguyenLieuActionPerformed
-        frmNhapNguyenLieu frm = new frmNhapNguyenLieu();
-        frm.setVisible(true);
-        frm.setLocation(310, 85);
+        if(PhanQuyenDAO.kiemTraCoQuyenNhapNguyenLieu(tk)){
+            frmNhapNguyenLieu frm = new frmNhapNguyenLieu();
+            frm.setVisible(true);
+            frm.setLocation(310, 85);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnNhapNguyenLieuActionPerformed
 
     private void btnHoaDonNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonNhapActionPerformed
-        frmHoaDonNhap frm = new frmHoaDonNhap();
-        frm.setVisible(true);
-        frm.setLocation(310, 85);
+        if(PhanQuyenDAO.kiemTraCoQuyenXemHoaDonNhap(tk)){
+            frmHoaDonNhap frm = new frmHoaDonNhap();
+            frm.setVisible(true);
+            frm.setLocation(310, 85);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnHoaDonNhapActionPerformed
 
 

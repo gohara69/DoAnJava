@@ -18,11 +18,25 @@ import java.util.logging.Logger;
  * @author VU HOANG
  */
 public class ChiTietPhieuDatDAO {
+//    public static boolean themCTPhieuNhap(ChiTietPhieuDat ctpd){
+//        boolean kq = false;
+//        String sql = String.format("insert into CTPHIEUDAT " + 
+//                                    "values(%d, %d,%d,0)",ctpd.getPD_ID(), ctpd.getNL_ID(), ctpd.getSOLUONG());
+//        DataService ds = new DataService();
+//        ds.open();
+//        int n = ds.executeUpdate(sql);
+//        if(n == 1){
+//            kq = true;
+//        }
+//        ds.close();
+//        return kq;
+//    }
+    
     public static boolean themCTPhieuNhap(ChiTietPhieuDat ctpd){
         boolean kq = false;
         String sql = String.format("insert into CTPHIEUDAT " + 
                                     "values(%d, %d,%d,0)",ctpd.getPD_ID(), ctpd.getNL_ID(), ctpd.getSOLUONG());
-        DataService ds = new DataService();
+        DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);
         if(n == 1){
@@ -37,7 +51,7 @@ public class ChiTietPhieuDatDAO {
         try {
             String sql = "select *\n" +
                         "from CTPHIEUDAT where PD_ID = " + pd.getPD_ID();
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {

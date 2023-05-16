@@ -39,7 +39,7 @@ public class ChiTietNhapDAO {
         ArrayList<ChiTietNhap> dsCTN = new ArrayList<>();
         try {
             String sql = "select * from CHITIETNHAP where HDN_ID = " + hdn.getHDN_ID();
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {

@@ -18,6 +18,31 @@ import model.NhaCungCap;
  * @author VU HOANG
  */
 public class NguyenLieuDAO {
+//    public static ArrayList<NguyenLieu> searchIngredientById (NguyenLieu nl, int nccId) {
+//        ArrayList<NguyenLieu> dsdm = new ArrayList<>();
+//        try {
+//            String sql = "select top 1 NGUYENLIEU.NL_ID, NL_TEN, NL_DONVITINH, NL_GIA\n" +
+//                        "from NGUYENLIEU, GIANGUYENLIEU\n" +
+//                        "where NGUYENLIEU.NL_ID = GIANGUYENLIEU.NL_ID and NGUYENLIEU.NL_ID = " + nl.getNL_ID()
+//                        + " and NCC_ID = " + nccId + " order by NGAYTHAYDOI desc";
+//            DataService ds = new DataService();
+//            ds.open();
+//            ResultSet rs = ds.executeQuery(sql);
+//            while(rs.next()){
+//                NguyenLieu nlieu = new NguyenLieu();
+//                nlieu.setNL_ID(rs.getInt("NL_ID"));
+//                nlieu.setNL_TEN(rs.getString("NL_TEN"));
+//                nlieu.setNL_DONVITINH(rs.getString("NL_DONVITINH"));
+//                nlieu.setNL_GIA(rs.getFloat("NL_GIA"));
+//                
+//                dsdm.add(nlieu);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return dsdm;
+//    }
+    
     public static ArrayList<NguyenLieu> searchIngredientById (NguyenLieu nl, int nccId) {
         ArrayList<NguyenLieu> dsdm = new ArrayList<>();
         try {
@@ -25,7 +50,7 @@ public class NguyenLieuDAO {
                         "from NGUYENLIEU, GIANGUYENLIEU\n" +
                         "where NGUYENLIEU.NL_ID = GIANGUYENLIEU.NL_ID and NGUYENLIEU.NL_ID = " + nl.getNL_ID()
                         + " and NCC_ID = " + nccId + " order by NGAYTHAYDOI desc";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()){
@@ -84,7 +109,7 @@ public class NguyenLieuDAO {
         ArrayList<Integer> dsnl = new ArrayList<>();
         try {
             String sql = "select distinct NL_ID from NGUYENLIEU where NCC_ID = " + ncc.getNCC_ID();
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()){
@@ -96,12 +121,49 @@ public class NguyenLieuDAO {
         return dsnl;
     }
     
+//    public static ArrayList<Integer> searchIngredientByNCCId (NhaCungCap ncc) {
+//        ArrayList<Integer> dsnl = new ArrayList<>();
+//        try {
+//            String sql = "select distinct NL_ID from NGUYENLIEU where NCC_ID = " + ncc.getNCC_ID();
+//            DataService ds = new DataService();
+//            ds.open();
+//            ResultSet rs = ds.executeQuery(sql);
+//            while(rs.next()){
+//                dsnl.add(rs.getInt("NL_ID"));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return dsnl;
+//    }
+    
+//    public static ArrayList<NguyenLieu> searchIngredientNameByNCCId (NhaCungCap ncc) {
+//        ArrayList<NguyenLieu> dsnl = new ArrayList<>();
+//        try {
+//            String sql = "select distinct NGUYENLIEU.NL_ID ,NL_TEN from GIANGUYENLIEU, NGUYENLIEU where " + 
+//                    "GIANGUYENLIEU.NL_ID = NGUYENLIEU.NL_ID and NCC_ID = " + ncc.getNCC_ID();
+//            DataService ds = new DataService();
+//            ds.open();
+//            ResultSet rs = ds.executeQuery(sql);
+//            while(rs.next()){
+//                NguyenLieu nl = new NguyenLieu();
+//                nl.setNL_ID(rs.getInt("NL_ID"));
+//                nl.setNL_TEN(rs.getString("NL_TEN"));
+//                
+//                dsnl.add(nl);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return dsnl;
+//    }
+    
     public static ArrayList<NguyenLieu> searchIngredientNameByNCCId (NhaCungCap ncc) {
         ArrayList<NguyenLieu> dsnl = new ArrayList<>();
         try {
             String sql = "select distinct NGUYENLIEU.NL_ID ,NL_TEN from GIANGUYENLIEU, NGUYENLIEU where " + 
                     "GIANGUYENLIEU.NL_ID = NGUYENLIEU.NL_ID and NCC_ID = " + ncc.getNCC_ID();
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()){
@@ -117,11 +179,27 @@ public class NguyenLieuDAO {
         return dsnl;
     }
     
+//     public static Float searchIngredientPriceById (NguyenLieu nl) {
+//        ArrayList<Float> dsGia = new ArrayList<>();
+//        try {
+//            String sql = "select TOP 1 NL_GIA from GIANGUYENLIEU where NL_ID = " + nl.getNL_ID() + " order by NGAYTHAYDOI desc";
+//            DataService ds = new DataService();
+//            ds.open();
+//            ResultSet rs = ds.executeQuery(sql);
+//            while(rs.next()){
+//                dsGia.add(rs.getFloat("NL_GIA"));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return dsGia.get(0);
+//    }
+     
      public static Float searchIngredientPriceById (NguyenLieu nl) {
         ArrayList<Float> dsGia = new ArrayList<>();
         try {
             String sql = "select TOP 1 NL_GIA from GIANGUYENLIEU where NL_ID = " + nl.getNL_ID() + " order by NGAYTHAYDOI desc";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()){

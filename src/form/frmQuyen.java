@@ -4,8 +4,28 @@
  */
 package form;
 
+import DAO.NguoiDungDAO;
+import DAO.NhaCungCapDAO;
+import DAO.NhomQuyenDAO;
+import DAO.NhomQuyen_NguoiDungDAO;
+import DAO.PhanQuyenDAO;
+import java.awt.Color;
 import java.awt.Label;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import model.ComboBoxItem;
+import model.NguoiDung;
+import model.NhaCungCap;
+import model.NhomQuyen;
+import swing.scrollbar;
 
 /**
  *
@@ -18,9 +38,47 @@ public class frmQuyen extends javax.swing.JPanel {
      */
     public frmQuyen() {
         initComponents();
-        JLabel label = new JLabel("Bố");
-        label.setSize(100, 100);// Tạo một đối tượng JLabel mới
-        jPanel1.add(label);  // Thêm đối tượng JLabel mới vào JPanel đã khởi tạo trước đó
+        spTable.setVerticalScrollBar(new scrollbar());
+        spTable.getViewport().setBackground(Color.WHITE);
+        JPanel p = new JPanel();
+        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        spTable.setVerticalScrollBar(new scrollbar());
+        
+        cboChucVu.removeAllItems();
+        ArrayList<NguoiDung> dsNG = NguoiDungDAO.layThongTinNguoiDung();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for(NguoiDung a : dsNG){
+            model.addElement(new ComboBoxItem(a.getNG_ID(), a.getNG_PHONGBAN()));
+        }
+        cboChucVu.setModel(model);
+        cboChucVu.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                loadData();
+            }
+        });
+        
+        loadData();
+    }
+    
+    public void clear(){
+        DefaultTableModel table = (DefaultTableModel)tblQuyen.getModel();
+        table.setRowCount(0);
+    }
+    
+    public void loadData(){
+        clear();
+        ArrayList<NhomQuyen> dsNhomQuyen = NhomQuyenDAO.layDanhSachNhomQuyen();
+        NguoiDung ng = new NguoiDung();
+        ng.setNG_PHONGBAN(((ComboBoxItem)cboChucVu.getSelectedItem()).getValue());
+        for(NhomQuyen nq : dsNhomQuyen){
+            Vector info = new Vector();
+            info.add(nq.getNQ_HIENTHI());
+            Boolean check = NhomQuyenDAO.kiemTraNguoiDungCoNhomQuyen(nq, ng);
+            info.add(check);
+            
+            tblQuyen.addRow(info);
+        }
     }
 
     /**
@@ -33,49 +91,152 @@ public class frmQuyen extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        cboChucVu = new swing.combobox();
+        panelBorder1 = new swing.panelBorder();
+        spTable = new javax.swing.JScrollPane();
+        tblQuyen = new swing.table();
+        btnPhanQuyen = new swing.button();
+        button1 = new swing.button();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Quyền");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Chức vụ");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
+        panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
+
+        spTable.setBorder(null);
+
+        tblQuyen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null,  new Boolean(true)},
+                {null,  new Boolean(true)},
+                {null,  new Boolean(true)},
+                {null, null}
+            },
+            new String [] {
+                "Nhóm quyền", "Cho phép"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        spTable.setViewportView(tblQuyen);
+
+        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
+        panelBorder1.setLayout(panelBorder1Layout);
+        panelBorder1Layout.setHorizontalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        panelBorder1Layout.setVerticalGroup(
+            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        btnPhanQuyen.setText("Phân quyền");
+        btnPhanQuyen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPhanQuyenActionPerformed(evt);
+            }
+        });
+
+        button1.setText("Nhóm quyền");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(jLabel1)
-                .addContainerGap(190, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(395, 395, 395)
+                        .addComponent(btnPhanQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(252, 252, 252)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel1)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
+                .addGap(21, 21, 21)
+                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(btnPhanQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPhanQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanQuyenActionPerformed
+        for(int i = 0 ; i < tblQuyen.getRowCount() ; i++){
+            NhomQuyen nq = new NhomQuyen();
+            nq.setNQ_HIENTHI(tblQuyen.getValueAt(i, 0) + ""); 
+            NhomQuyen nquyen = NhomQuyenDAO.layNhomQuyenTheoHienThi(nq);
+
+            NguoiDung nd = new NguoiDung();
+            nd.setNG_ID(((ComboBoxItem)cboChucVu.getSelectedItem()).getKeyString());
+            if(Boolean.parseBoolean(tblQuyen.getValueAt(i, 1) + "")){
+                if(!NhomQuyen_NguoiDungDAO.kiemTraNhomQuyenPhanChoNguoiDung(nquyen, nd)){
+                    NhomQuyen_NguoiDungDAO.themNhomQuyenNguoiDung(nquyen, nd);
+                    PhanQuyenDAO.phanQuyen(nquyen, nd);
+                }
+            } else {
+                PhanQuyenDAO.huyPhanQuyen(nquyen, nd);
+                NhomQuyen_NguoiDungDAO.xoaNguoiDungKhoiNhomQuyen(nquyen, nd);
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Cập nhật quyền thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnPhanQuyenActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        frmNhomQuyen frm = new frmNhomQuyen();
+        frm.setVisible(true);
+        frm.setLocation(310, 85);
+    }//GEN-LAST:event_button1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private swing.button btnPhanQuyen;
+    private swing.button button1;
+    private swing.combobox cboChucVu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private swing.panelBorder panelBorder1;
+    private javax.swing.JScrollPane spTable;
+    private swing.table tblQuyen;
     // End of variables declaration//GEN-END:variables
 }

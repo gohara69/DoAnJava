@@ -20,9 +20,10 @@ public class chartDAO {
     public static ArrayList<chartModel> getListChartModel(){
         ArrayList<chartModel> dsChartModel = new ArrayList<>();
         try {
-            String sql = "Select DATEPART(YEAR, HDN_NGAYNHAP), DATENAME(MONTH, HDN_NGAYNHAP) AS 'MONTH', SUM(HDN_THANHTIEN) AS 'COST'\n" +
+            String sql = "Select TOP 12 DATEPART(YEAR, HDN_NGAYNHAP), DATENAME(MONTH, HDN_NGAYNHAP) AS 'MONTH', SUM(HDN_THANHTIEN) AS 'COST'\n" +
                          "from HOADONNHAP\n" +
-                        "group by DATEPART(YEAR, HDN_NGAYNHAP), DATENAME(MONTH, HDN_NGAYNHAP)";
+                        "group by DATEPART(YEAR, HDN_NGAYNHAP), DATENAME(MONTH, HDN_NGAYNHAP) " + 
+                        "order by DATEPART(YEAR, HDN_NGAYNHAP) asc, DATENAME(MONTH, HDN_NGAYNHAP) asc";
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
