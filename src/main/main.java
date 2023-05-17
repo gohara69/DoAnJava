@@ -97,7 +97,11 @@ public class main extends javax.swing.JFrame {
                         setForm(new frmNguyenLieu());
                         break;
                     case 2:
-                        setForm(new frmNhaCungCap());
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemNhaCungCap(tkhoan)){
+                            setForm(new frmNhaCungCap());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         break;
                     case 3:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemDanhMuc(tkhoan)){
@@ -107,7 +111,11 @@ public class main extends javax.swing.JFrame {
                         }
                         break;
                     case 4:
-                        setForm(new frmNhanVien());
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemNhanVien(tkhoan)){
+                            setForm(new frmNhanVien());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         break;
                     case 5:
                         setForm(new frmChonMon());

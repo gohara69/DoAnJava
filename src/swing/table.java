@@ -36,8 +36,9 @@ public class table extends JTable{
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 if(column != 7){
-                    Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    DefaultTableCellRenderer com = (DefaultTableCellRenderer) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                     com.setBackground(Color.WHITE);
+                    com.setHorizontalAlignment(CENTER);
                     setBorder(noFocusBorder);
                     if(isSelected){
                        com.setForeground(Color.BLACK);

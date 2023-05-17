@@ -98,7 +98,7 @@ public class NhanVienDAO {
     }
      public static boolean xoaNhanVien(NhanVien nv) {
         boolean kq = false;
-        String sql = String.format("Delete from NHANVIEN where NV_ID = %d", nv.getNV_ID());
+        String sql = String.format("Delete from NHANVIEN where NV_ID = '%s'", nv.getNV_ID());
         DataService ds = new DataService();
         ds.open();
         int n = ds.executeUpdate(sql);
@@ -108,8 +108,6 @@ public class NhanVienDAO {
         ds.close();
         return kq;
     }
-
-   
 
     public static boolean capNhatNhanVien(NhanVien nv) {
         boolean kq = false;

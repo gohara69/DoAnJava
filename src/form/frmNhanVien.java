@@ -4,6 +4,7 @@
  */
 package form;
 import DAO.NhanVienDAO;
+import DAO.PhanQuyenDAO;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import model.NhanVien;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import model.TaiKhoan;
 import swing.scrollbar;
 
 /**
@@ -24,6 +26,7 @@ import swing.scrollbar;
 public class frmNhanVien extends javax.swing.JPanel {
 
     Vector data = new Vector();
+    TaiKhoan tkhoan = main.main.tkhoan;
     /**
      * Creates new form frmNhanVien
      */
@@ -370,6 +373,11 @@ public class frmNhanVien extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
+        if(!PhanQuyenDAO.kiemTraCoQuyenThaoTacNhanVien(tkhoan)){
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thao tác", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         if (txtName.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhân viên để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -395,11 +403,15 @@ public class frmNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_btnthemActionPerformed
 
     private void btnxoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoaActionPerformed
-        // TODO add your handling code here:
+        if(!PhanQuyenDAO.kiemTraCoQuyenThaoTacNhanVien(tkhoan)){
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thao tác", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         int pos = tblNhanVien.getSelectedRow();
         if (pos >= 0 && JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa nhân viên này", "Thông báo", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.OK_OPTION) {
             NhanVien nv = new NhanVien();
-            int selectedID = (int) tblNhanVien.getValueAt(pos, 0);
+            String selectedID = tblNhanVien.getValueAt(pos, 0).toString();
             nv.setNV_ID(selectedID);
             if (NhanVienDAO.xoaNhanVien(nv)) {
                 JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -412,6 +424,10 @@ public class frmNhanVien extends javax.swing.JPanel {
     }//GEN-LAST:event_btnxoaActionPerformed
 
     private void btnsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuaActionPerformed
+        if(!PhanQuyenDAO.kiemTraCoQuyenThaoTacNhanVien(tkhoan)){
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thao tác", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         NhanVien nv = new NhanVien();
             nv.setNV_ID(txt_ID.getText());
             nv.setNV_TEN(txtName.getText().trim());

@@ -23,7 +23,7 @@ public class NhaCungCapDAO {
         ArrayList<NhaCungCap> dsNcc = new ArrayList<>();
         try {
             String sql = "Select * from NHACUNGCAP";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {
@@ -86,7 +86,7 @@ public class NhaCungCapDAO {
         ArrayList<NhaCungCap> dsNcc = new ArrayList<NhaCungCap>();
         try {
             String sql = "select * from NhaCungCap where NCC_TEN like N'%" + ncc.getNCC_TEN() + "%'";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()){
@@ -106,7 +106,7 @@ public class NhaCungCapDAO {
     public static boolean xoaNhaCungCap(NhaCungCap ncc) {
         boolean kq = false;
         String sql = String.format("Delete from NHACUNGCAP where NCC_ID = %d", ncc.getNCC_ID());
-        DataService ds = new DataService();
+        DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);
         if(n == 1){
@@ -119,7 +119,7 @@ public class NhaCungCapDAO {
     public static boolean themNhaCungCap(NhaCungCap ncc) {
        boolean kq = false;
         String sql = "INSERT INTO NHACUNGCAP (NCC_ID, NCC_TEN, NCC_DIACHI, NCC_SDT) VALUES ("+ncc.getNCC_ID()+", N'"+ncc.getNCC_TEN()+"', N'"+ncc.getNCC_DIACHI()+"', '"+ncc.getNCC_SDT()+"')";
-        DataService ds = new DataService();
+        DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);
         if(n == 1){
@@ -132,7 +132,7 @@ public class NhaCungCapDAO {
     public static boolean capNhatNhaCungCap(NhaCungCap ncc) {
         boolean kq = false;
         String sql = String.format("UPDATE NHACUNGCAP SET NCC_TEN = N'"+ncc.getNCC_TEN()+"', NCC_SDT = '"+ncc.getNCC_SDT()+"', NCC_DIACHI = N'"+ncc.getNCC_DIACHI()+"' WHERE NCC_ID = "+ncc.getNCC_ID()+"");
-        DataService ds = new DataService();
+        DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);
         if(n == 1){
@@ -140,5 +140,23 @@ public class NhaCungCapDAO {
         }
         ds.close();
         return kq;
+    }
+    
+    public static Integer layMaNhaCungCapTiepTheo(){
+        Integer id = 0;
+        try {
+             String sql = "select TOP 1 NCC_ID\n" +
+                     "from NHACUNGCAP\n" +
+                     "order by NCC_ID desc";
+             DataService ds = new DataService(main.main.nguoiDung);
+             ds.open();
+             ResultSet rs = ds.executeQuery(sql);
+             while(rs.next()){
+                 id = rs.getInt("NCC_ID");
+             }
+         } catch (SQLException ex) {
+             Logger.getLogger(NhaCungCapDAO.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        return id + 1;
     }
 }

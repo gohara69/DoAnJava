@@ -33,6 +33,7 @@ import swing.scrollbar;
  */
 public class frmQuyen extends javax.swing.JPanel {
 
+    ItemListener itemListener;
     /**
      * Creates new form frmQuyen
      */
@@ -51,13 +52,13 @@ public class frmQuyen extends javax.swing.JPanel {
             model.addElement(new ComboBoxItem(a.getNG_ID(), a.getNG_PHONGBAN()));
         }
         cboChucVu.setModel(model);
-        cboChucVu.addItemListener(new ItemListener(){
+        itemListener = new ItemListener(){
             @Override
             public void itemStateChanged(ItemEvent e) {
                 loadData();
             }
-        });
-        
+        };
+        cboChucVu.addItemListener(itemListener);
         loadData();
     }
     
@@ -97,6 +98,7 @@ public class frmQuyen extends javax.swing.JPanel {
         tblQuyen = new swing.table();
         btnPhanQuyen = new swing.button();
         button1 = new swing.button();
+        btnReload = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Chức vụ");
@@ -164,6 +166,13 @@ public class frmQuyen extends javax.swing.JPanel {
             }
         });
 
+        btnReload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/reload (1).png"))); // NOI18N
+        btnReload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReloadMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,7 +187,9 @@ public class frmQuyen extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(252, 252, 252)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnReload)
+                                .addGap(189, 189, 189)
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(cboChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -190,10 +201,13 @@ public class frmQuyen extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cboChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(btnReload)))
                 .addGap(21, 21, 21)
                 .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -229,9 +243,14 @@ public class frmQuyen extends javax.swing.JPanel {
         frm.setLocation(310, 85);
     }//GEN-LAST:event_button1ActionPerformed
 
+    private void btnReloadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReloadMouseClicked
+        loadData();
+    }//GEN-LAST:event_btnReloadMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.button btnPhanQuyen;
+    private javax.swing.JLabel btnReload;
     private swing.button button1;
     private swing.combobox cboChucVu;
     private javax.swing.JLabel jLabel1;

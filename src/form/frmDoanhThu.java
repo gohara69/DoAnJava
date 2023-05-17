@@ -124,7 +124,6 @@ public class frmDoanhThu extends javax.swing.JPanel {
 
         chart.setBackground(new java.awt.Color(255, 255, 255));
         chart.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        chart.setTitleColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout panelShadow1Layout = new javax.swing.GroupLayout(panelShadow1);
         panelShadow1.setLayout(panelShadow1Layout);
