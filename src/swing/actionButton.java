@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -27,6 +28,7 @@ public class actionButton extends JButton{
     public actionButton() {
         setContentAreaFilled(false);
         setBorder(new EmptyBorder(3, 3, 3, 3));
+        setHorizontalAlignment(JLabel.CENTER);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {

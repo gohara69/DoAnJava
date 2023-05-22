@@ -37,8 +37,8 @@ public class PhieuDatDAO {
     
     public static boolean themPhieuNhap(PhieuDat pd){
         boolean kq = false;
-        String sql = String.format("insert into PHIEUDAT(NV_ID, NCC_ID, PD_DATE, PD_TRANGTHAI)\n" +
-                                   "values('%s',%d,'%s',0)", pd.getNV_ID(), pd.getNCC_ID(), pd.getPD_DATE());
+        String sql = String.format("insert into PHIEUDAT\n" +
+                                   "values('%s',%d,'%s',0, %d)", pd.getNV_ID(), pd.getNCC_ID(), pd.getPD_DATE(), pd.getPD_ID());
         DataService ds = new DataService(main.main.nguoiDung);
         ds.open();
         int n = ds.executeUpdate(sql);

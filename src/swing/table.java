@@ -35,7 +35,7 @@ public class table extends JTable{
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if(column != 7){
+                
                     DefaultTableCellRenderer com = (DefaultTableCellRenderer) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                     com.setBackground(Color.WHITE);
                     com.setHorizontalAlignment(CENTER);
@@ -48,8 +48,6 @@ public class table extends JTable{
                         com.setBackground(Color.WHITE);
                     }
                     return com;
-                }
-                return new JLabel("");
             }
         });
     }

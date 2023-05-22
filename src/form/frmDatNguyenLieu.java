@@ -210,6 +210,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         info.set(0, nlieu.getNL_ID());
         info.set(1, nlieu.getNL_TEN());
         info.set(2, nlieu.getNL_DONVITINH());
+        info.set(4, nlieu.getNL_GIA());
         updateTable();
     }
     
@@ -277,6 +278,17 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         
         int id = (Integer)tblNguyenLieu.getValueAt(row, 0);
         Vector info = (Vector) data.get(row);
+        int soluong;
+        try{
+            soluong = Integer.parseInt((String) info.get(3));
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số vào cột số lượng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            info.set(3, "");
+            info.set(5, "");
+            updateTable();
+            sumTotalPrice();
+            return;
+        }
         if(Integer.parseInt((String) info.get(3)) <= 0){
             JOptionPane.showMessageDialog(this, "Số lượng cần nhập phải lớn hơn 0", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             updateTable();
@@ -298,7 +310,11 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
     public void sumTotalPrice(){
         float sum = 0;
         for(int i = 0 ; i < data.size() ; i++){
-            sum+= Float.parseFloat((String)(((Vector)data.get(i)).get(5)));
+            Vector info = (Vector)data.get(i);
+            if(info.get(5) == ""){
+                continue;
+            }
+            sum+= Float.parseFloat((String)(info.get(5)));
         }
         txtThanhTien.setText(sum + "");
     }

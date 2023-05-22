@@ -153,6 +153,18 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
     
     public void handleWhenEditColSoLuongGiao(int row, int col){
         Vector info = (Vector) data.get(row);
+        int quantity;
+        try {
+            quantity = Integer.parseInt((String) info.get(4));
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số", "Thông báo", JOptionPane.OK_OPTION);
+            info.set(4, "");
+            info.set(6, "");
+            updateTable();
+            sumTotalPrice();
+            return;
+        }
+        
         if(Integer.parseInt((String) info.get(4)) <= 0){
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng lớn hơn 0", "Thông báo", JOptionPane.OK_OPTION);
             return;
@@ -381,7 +393,7 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
+                        .addGap(0, 26, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)))
@@ -397,6 +409,11 @@ public class frmNhapNguyenLieu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        if(txtThanhTien.getText() == "" || txtThanhTien.getText() == "0.0"){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng để nhập hàng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         HoaDonNhap hd = new HoaDonNhap();
         hd.setHDN_ID(Integer.parseInt(txtMaHoaDon.getText()));
         hd.setNV_ID("QL001");
