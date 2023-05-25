@@ -86,7 +86,8 @@ public class frmBan extends javax.swing.JPanel {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    
+                    frmChonMon frmChonMon = new frmChonMon();
+                    frmChonMon.setVisible(true);
                 }
             });
         }
