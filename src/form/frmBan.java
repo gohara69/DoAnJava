@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -86,12 +87,13 @@ public class frmBan extends javax.swing.JPanel {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    frmChonMon frmChonMon = new frmChonMon();
-                    frmChonMon.setVisible(true);
+                    main m = new main();
+                    m.setForm(new frmChonMon());
                 }
             });
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
