@@ -11,12 +11,18 @@ package model;
 public class ComboBoxItem {
     private int key;
     private String value;
+    private String keyString;
 
     public ComboBoxItem() {
     }
 
     public ComboBoxItem(int key, String value) {
         this.key = key;
+        this.value = value;
+    }
+    
+    public ComboBoxItem(String key, String value) {
+        this.keyString = key;
         this.value = value;
     }
 
@@ -40,6 +46,12 @@ public class ComboBoxItem {
     public String toString() {
         return getValue();
     }
-    
-    
+
+    public String getKeyString() {
+        return keyString;
+    }
+
+    public void setKeyString(String keyString) {
+        this.keyString = keyString;
+    }
 }

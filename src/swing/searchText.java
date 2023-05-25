@@ -27,6 +27,7 @@ public class searchText extends JTextField{
         setBackground(new Color(255, 255, 255, 0));
         setBorder(new EmptyBorder(10,10,10,10));
         setSelectionColor(new Color(220, 204, 182));
+        setDisabledTextColor(Color.BLACK);
     }
 
     public void setHint(String hint) {

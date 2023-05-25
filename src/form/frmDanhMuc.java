@@ -5,6 +5,7 @@
 package form;
 
 import DAO.DanhMucDAO;
+import DAO.PhanQuyenDAO;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -16,6 +17,7 @@ import model.DanhMuc;
 import swing.table;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import model.TaiKhoan;
 import swing.scrollbar;
 
 /**
@@ -23,7 +25,7 @@ import swing.scrollbar;
  * @author VU HOANG
  */
 public class frmDanhMuc extends javax.swing.JPanel {
-
+    TaiKhoan tkhoan = main.main.tkhoan;
     /**
      * Creates new form frmDanhMuc
      */
@@ -221,7 +223,12 @@ public class frmDanhMuc extends javax.swing.JPanel {
     }//GEN-LAST:event_tblDanhMucMouseClicked
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-       int pos = tblDanhMuc.getSelectedRow();
+        if(!PhanQuyenDAO.kiemTraCoQuyenThaoTacDanhMuc(tkhoan)){
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thao tác", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int pos = tblDanhMuc.getSelectedRow();
         if(pos >= 0 && JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa danh mục này", "Thông báo", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.OK_OPTION) {
             DanhMuc dm = new DanhMuc();
             int selectedID = (int) tblDanhMuc.getValueAt(pos, 0);
@@ -238,6 +245,11 @@ public class frmDanhMuc extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        if(!PhanQuyenDAO.kiemTraCoQuyenThaoTacDanhMuc(tkhoan)){
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thao tác", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         if(txtTenDanhMuc.getText().trim().length() == 0){
             JOptionPane.showMessageDialog(this, "Vui lòng nhập tên danh mục để thêm", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -258,6 +270,11 @@ public class frmDanhMuc extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        if(!PhanQuyenDAO.kiemTraCoQuyenThaoTacDanhMuc(tkhoan)){
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền thao tác", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         if(txtTenDanhMuc.getText().trim().length() == 0){
             JOptionPane.showMessageDialog(this, "Vui lòng nhập tên danh mục để sửa", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;

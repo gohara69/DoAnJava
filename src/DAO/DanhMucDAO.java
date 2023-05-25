@@ -22,7 +22,7 @@ public class DanhMucDAO {
         ArrayList<DanhMuc> dsdm = new ArrayList<DanhMuc>();
         try {
             String sql = "Select * from DANHMUC";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {
@@ -43,7 +43,7 @@ public class DanhMucDAO {
         ArrayList<DanhMuc> dsdm = new ArrayList<DanhMuc>();
         try {
             String sql = "select * from DanhMuc where DM_TEN like N'%" + dm.getDM_TEN() + "%'";
-            DataService ds = new DataService();
+            DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()){

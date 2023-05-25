@@ -65,4 +65,6 @@ public class NguyenLieu {
     public void setNL_SOLUONG(int NL_SOLUONG) {
         this.NL_SOLUONG = NL_SOLUONG;
     }
+
+   
 }

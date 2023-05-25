@@ -4,9 +4,12 @@
  */
 package main;
 
+import DAO.PhanQuyenDAO;
+import DAO.TaiKhoanDAO;
 import event.eventMenuSelected;
 import form.frmBan;
 import form.frmChonMon;
+import form.frmDangNhap;
 import form.frmDanhMuc;
 import form.frmDoanhThu;
 import form.frmHoaDon;
@@ -17,6 +20,9 @@ import form.frmQuyen;
 import form.frmTrangChu;
 import java.awt.Color;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import model.NguoiDung;
+import model.TaiKhoan;
 
 /**
  *
@@ -24,6 +30,8 @@ import javax.swing.JComponent;
  */
 public class main extends javax.swing.JFrame {
 
+    public static TaiKhoan tkhoan;
+    public static NguoiDung nguoiDung;
     /**
      * Creates new form main
      */
@@ -36,7 +44,7 @@ public class main extends javax.swing.JFrame {
             public void selected(int index) {
                 switch(index){
                     case 0:
-                         setForm(new frmTrangChu());
+                         setForm(new frmTrangChu(main.this));
                          break;
                     case 1:
                         setForm(new frmNguyenLieu());
@@ -58,12 +66,82 @@ public class main extends javax.swing.JFrame {
                         break;
                     case 8:
                         setForm(new frmQuyen());
-                        break;
                     case 9:
                         setForm(new frmDoanhThu());
                         break;
                     case 10:
                         System.exit(0);
+                        break;
+                }
+            }
+            
+        });
+        setForm(new frmTrangChu(main.this));
+    }
+    
+    public main(TaiKhoan tk) {
+        tkhoan = tk;
+        nguoiDung = TaiKhoanDAO.layNguoiDungTheoTaiKhoan(tkhoan);
+        System.out.println(tkhoan.getTK_NGUOIDUNG());
+        initComponents();
+        setBackground(new Color(0,0,0,0));
+        menu.initMoving(main.this);
+        menu.addEventMenuSelected(new eventMenuSelected(){
+            @Override
+            public void selected(int index) {
+                switch(index){
+                    case 0:
+                         setForm(new frmTrangChu());
+                         break;
+                    case 1:
+                        setForm(new frmNguyenLieu());
+                        break;
+                    case 2:
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemNhaCungCap(tkhoan)){
+                            setForm(new frmNhaCungCap());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        break;
+                    case 3:
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemDanhMuc(tkhoan)){
+                            setForm(new frmDanhMuc());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        break;
+                    case 4:
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemNhanVien(tkhoan)){
+                            setForm(new frmNhanVien());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        break;
+                    case 5:
+                        setForm(new frmChonMon());
+                        break;
+                    case 6:
+                        setForm(new frmHoaDon());
+                        break;
+                    case 8:
+                        if("sa".equals(tkhoan.getTK_NGUOIDUNG())){
+                            setForm(new frmQuyen());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                         break;
+                    case 9:
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemDoanhThu(tkhoan)){
+                            setForm(new frmDoanhThu());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        break;
+                    case 10:
+                        frmDangNhap frm = new frmDangNhap();
+                        setVisible(false);
+                        dispose();
+                        frm.setVisible(true);
                         break;
                 }
             }

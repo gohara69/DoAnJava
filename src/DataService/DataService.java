@@ -11,16 +11,13 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.NguoiDung;
 
 /**
  *
  * @author VU HOANG
  */
 public class DataService {
-
-    private Connection connect;
-
-    public void open() {
 //        String strServer = "DESKTOP-3PMAECF";
 //        String strDatabase = "QL_QuanMiCay";
 //        String strUser = "sa";
@@ -28,7 +25,7 @@ public class DataService {
 
         //Tuyền
 //        String strServer = "LAPTOP-0LI9CK71";
-//        String strDatabase = "QL_QuanMiCay";
+//        String strDatabase = "QL_QuanMiCay (2)";
 //        String strUser = "ngoctuyen";
 //        String strPassword = "1234";
 
@@ -36,6 +33,24 @@ public class DataService {
         String strDatabase = "QL_QuanMiCay";
         String strUser = "sa";
         String strPassword = "21062002";
+        
+//        String strServer = "DELL\\SQLEXPRESS";
+//        String strDatabase = "QL_QuanMiCay";
+//        String strUser = "sa";
+//        String strPassword = "21062002";
+
+    private Connection connect;
+    
+    public DataService(){
+        
+    }
+    
+    public DataService(NguoiDung nguoiDung){
+        strUser = nguoiDung.getNG_ID();
+        strPassword = nguoiDung.getNG_MATKHAU();
+    }
+
+    public void open() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String connectUrl = "jdbc:sqlserver://" + strServer + ":1433; databaseName = " + strDatabase

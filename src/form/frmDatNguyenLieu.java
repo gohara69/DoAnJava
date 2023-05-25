@@ -8,6 +8,8 @@ import DAO.NguyenLieuDAO;
 import DAO.NhaCungCapDAO;
 import DAO.PhieuDatDAO;
 import DAO.ChiTietPhieuDatDAO;
+import DAO.NhanVienDAO;
+import DAO.PhanQuyenDAO;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -33,6 +35,8 @@ import model.NguyenLieu;
 import model.NhaCungCap;
 import model.PhieuDat;
 import model.ChiTietPhieuDat;
+import model.NhanVien;
+import model.TaiKhoan;
 import swing.button;
 import swing.combobox;
 import swing.scrollbar;
@@ -48,6 +52,8 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
     Vector data = new Vector();
     Vector dataId = new Vector();
     tableActionEvent event;
+    TaiKhoan taiKhoan = main.main.tkhoan;
+    NhanVien nhanVien = NhanVienDAO.layNhanVienTheoTaiKhoan(taiKhoan);
     TableModelListener modelTableListener = new TableModelListener(){
         @Override
         public void tableChanged(TableModelEvent e) {
@@ -79,10 +85,10 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         txtTenNhanVien.setHint("");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
         LocalDate now = LocalDate.now();  
-        txtNgayNhap.setHint(now + "");
+        txtNgayNhap.setText(now + "");
         txtThanhTien.setHint("");
         tblNguyenLieu.getModel().addTableModelListener(modelTableListener);
-        txtTenNhanVien.setText("Nguyễn Hữu Hòa");
+        txtTenNhanVien.setText(nhanVien.getNV_TEN());
         txtPhieuDatId.setText(PhieuDatDAO.layMaPhieuDatTiepTheo() + "");
         
         cboNhaCungCap.removeAllItems();
@@ -204,6 +210,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         info.set(0, nlieu.getNL_ID());
         info.set(1, nlieu.getNL_TEN());
         info.set(2, nlieu.getNL_DONVITINH());
+        info.set(4, nlieu.getNL_GIA());
         updateTable();
     }
     
@@ -271,6 +278,17 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         
         int id = (Integer)tblNguyenLieu.getValueAt(row, 0);
         Vector info = (Vector) data.get(row);
+        int soluong;
+        try{
+            soluong = Integer.parseInt((String) info.get(3));
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số vào cột số lượng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            info.set(3, "");
+            info.set(5, "");
+            updateTable();
+            sumTotalPrice();
+            return;
+        }
         if(Integer.parseInt((String) info.get(3)) <= 0){
             JOptionPane.showMessageDialog(this, "Số lượng cần nhập phải lớn hơn 0", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             updateTable();
@@ -292,7 +310,11 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
     public void sumTotalPrice(){
         float sum = 0;
         for(int i = 0 ; i < data.size() ; i++){
-            sum+= Float.parseFloat((String)(((Vector)data.get(i)).get(5)));
+            Vector info = (Vector)data.get(i);
+            if(info.get(5) == ""){
+                continue;
+            }
+            sum+= Float.parseFloat((String)(info.get(5)));
         }
         txtThanhTien.setText(sum + "");
     }
@@ -301,8 +323,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
         PhieuDat pd = new PhieuDat();
         int nccId = ((ComboBoxItem)cboNhaCungCap.getSelectedItem()).getKey();
         pd.setNCC_ID(nccId);
-        //Tạm thời gán cứng cho nhân viên id
-        pd.setNV_ID("PV002");
+        pd.setNV_ID(nhanVien.getNV_ID());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
         LocalDate now = LocalDate.now();  
         pd.setPD_DATE("" + now);
@@ -320,7 +341,6 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
                     int soluong = Integer.parseInt((String) b.get(3)) + Integer.parseInt((String)a.get(3));
                     a.set(3, soluong + "");
                     a.set(5, soluong * Float.parseFloat(a.get(4).toString()));
-                    System.out.println(a.get(5));
                     data.remove(b);
                     j--;
                 }
@@ -476,7 +496,7 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnNhapNguyenLieu.setText("Nhập nguyên liệu");
+        btnNhapNguyenLieu.setText("Đặt nguyên liệu");
         btnNhapNguyenLieu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNhapNguyenLieuActionPerformed(evt);
@@ -578,8 +598,12 @@ public class frmDatNguyenLieu extends javax.swing.JFrame {
             return;
         }
         
-        themPhieuDat();
-        themChiTietPhieuDat();
+        if(PhanQuyenDAO.kiemTraCoQuyenDatNguyenLieu(main.main.tkhoan)){
+            themPhieuDat();
+            themChiTietPhieuDat();
+        } else {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền đặt nguyên liệu", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
         clearAll();
     }//GEN-LAST:event_btnNhapNguyenLieuActionPerformed
     /**
