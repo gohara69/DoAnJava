@@ -159,7 +159,6 @@ public class frmNhanVien extends javax.swing.JPanel {
         spTable = new javax.swing.JScrollPane();
         tblNhanVien = new swing.table();
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
@@ -201,25 +200,18 @@ public class frmNhanVien extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("ID :");
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Họ Tên :");
 
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Giới Tính :");
 
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Ngày Sinh :");
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Địa chỉ :");
 
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("SDT :");
 
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Tình Trạng :");
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
