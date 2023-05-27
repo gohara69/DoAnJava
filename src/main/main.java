@@ -59,7 +59,7 @@ public class main extends javax.swing.JFrame {
                         setForm(new frmNhanVien());
                         break;
                     case 5:
-                        setForm(new frmChonMon());
+                        setForm(new frmBan());
                         break;
                     case 6:
                         setForm(new frmHoaDon());

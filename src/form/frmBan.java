@@ -4,7 +4,10 @@
  */
 package form;
 
+import DAO.HoaDonDAO;
 import DAO.OrderDAO;
+import DAO.TaiKhoanDAO;
+import main.main;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,7 +31,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import main.main;
 import model.Ban;
+import model.HoaDon;
 import model.Mon;
+import model.TaiKhoan;
 
 /**
  *
@@ -37,6 +44,8 @@ public class frmBan extends javax.swing.JPanel {
     /**
      * Creates new form frmBan
      */
+    int saveSoBan;
+
     public frmBan() {
         initComponents();
         insertButtonTable();
@@ -60,6 +69,24 @@ public class frmBan extends javax.swing.JPanel {
         return button;
     }
 
+    public HoaDon createHoaDon(String textButtonBan) {
+        HoaDon hd = new HoaDon();
+        TaiKhoan tk = main.tkhoan;
+        String maNVLapHD = TaiKhoanDAO.layMaNVLapHD(tk.getTK_ID());
+        LocalDate date = LocalDate.now();
+        hd.setMaHD(HoaDonDAO.layMaHoaDonTiepTheo());
+        String textBan = textButtonBan;
+        int lengthTextBan = textBan.length();
+        String tachLaySoBan = textBan.substring(7, lengthTextBan);
+        int soBan = Integer.valueOf(tachLaySoBan);
+        hd.setSoBan(soBan);
+        hd.setMaNV(maNVLapHD);
+        hd.setThanhTien(0);
+        hd.setNgayXuatHD(date.toString());
+        hd.setTrangThai(false);
+        return hd;
+    }
+
     public void insertButtonTable() {
         ArrayList<Integer> ds_ban_empty = DAO.BanDAO.getListTableEmpty();
         ArrayList<Integer> ds_ban_not_empty = DAO.BanDAO.getListTableNotEmpty();
@@ -67,33 +94,35 @@ public class frmBan extends javax.swing.JPanel {
         String srcImg = "";
         int i = 0, soBan = 0;
         boolean check = false;
-        for(int j = 0; j < ds_ban_not_empty.size(); j++){
+        for (int j = 0; j < ds_ban_not_empty.size(); j++) {
             ds_ban_empty.add(0);
         }
-        while(i < length){
+        while (i < length) {
             soBan++;
-            if(soBan == ds_ban_empty.get(i)){
+            if (soBan == ds_ban_empty.get(i)) {
                 srcImg = "./src/icon/table_empty.png";
                 check = false;
-            }else{
+            } else {
                 srcImg = "./src/icon/table_full.png";
                 check = true;
                 length--;
             }
-            if(!check)
+            if (!check) {
                 i++;
+            }
             JButton button = createButtonTable(soBan, srcImg);
             jPanel1.add(button);
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    main m = new main();
-                    m.setForm(new frmChonMon());
+                    HoaDon hd = createHoaDon(button.getText());
+                    HoaDonDAO.addBill(hd);
+                    frmChonMon form = new frmChonMon();
+                    form.setVisible(true);
                 }
             });
         }
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

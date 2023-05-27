@@ -22,7 +22,7 @@ public class DanhMucDAO {
         ArrayList<DanhMuc> dsdm = new ArrayList<DanhMuc>();
         try {
             String sql = "Select * from DANHMUC";
-            DataService ds = new DataService(main.main.nguoiDung);
+            DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
             while(rs.next()) {
