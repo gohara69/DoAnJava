@@ -40,6 +40,7 @@ public class frmChonMon extends javax.swing.JFrame {
         initComponents();
         insertAllButtonFood();
         insertButtonCategoryFood();
+        lbSoBanDaChon.setText("Chi Tiết Gọi Món Bàn Số " + frmBan.saveSoBan);
         jPanel1.updateUI();
     }
     public ImageIcon resizeImage(String srcImg, int height, int width) {
@@ -72,6 +73,23 @@ public class frmChonMon extends javax.swing.JFrame {
         button.setText("<html><body style=\"text-align: center; color: #00DD00\">" + nameFood + "<br>" + "<p style=\"color: #33CCFF\">" + priceFood + " VNĐ" + "<br>" + "<span style=\"color: #FF00FF;\">"+ quantity +"</span>" +"</p>" + "</body></html>");
         return button;
     }
+    
+    public void insertButtonFoodChoose(int soLuong, JPanel panelContainBtnFoodOrder, JButton buttonFoodChoose){
+        panelContainBtnFoodOrder.add(buttonFoodChoose);
+        panelContainBtnFoodOrder.updateUI();
+        buttonFoodChoose.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int option = JOptionPane.showConfirmDialog(frmChonMon.this, "Bạn có muốn xóa món?");
+                if(option == 0)
+                {
+                    panelContainBtnFoodOrder.remove(buttonFoodChoose);
+                    panelContainBtnFoodOrder.revalidate();
+                    panelContainBtnFoodOrder.repaint();
+                }
+            }
+        });
+    }
 
     public void insertButtonFood(ArrayList<Mon> dsMon, JPanel panelContainBtnFood, JPanel panelContainBtnFoodOrder) {
         for (Mon mon : dsMon) {
@@ -82,8 +100,9 @@ public class frmChonMon extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     int quantityOrder = Integer.valueOf(JOptionPane.showInputDialog("Nhập số lượng: "));
                     JButton bt = createButtonFood(mon.getSrcAnh(), mon.getTenMon(), mon.getGiaMon(), "Số lượng: " + String.valueOf(quantityOrder));
-                    panelContainBtnFoodOrder.add(bt);
-                    panelContainBtnFoodOrder.updateUI();
+//                    panelContainBtnFoodOrder.add(bt);
+//                    panelContainBtnFoodOrder.updateUI();
+                    insertButtonFoodChoose(quantityOrder, panelContainBtnFoodOrder, bt);
                     sumPriceOrder += mon.getGiaMon() * quantityOrder;
                     jLabel1.setText(sumPriceOrder + " VNĐ");
                     boolean checkAddOrderSql = OrderDAO.addOrder(mon, quantityOrder, 3, "");
@@ -141,7 +160,7 @@ public class frmChonMon extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel31 = new javax.swing.JLabel();
+        lbSoBanDaChon = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -157,14 +176,13 @@ public class frmChonMon extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
         jScrollPane1.setViewportView(jPanel5);
 
         jPanel1.setLayout(new java.awt.GridLayout(38, 2, 0, 40));
         jScrollPane2.setViewportView(jPanel1);
 
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel31.setText("Chi Tiết Gọi Món Bàn ...");
+        lbSoBanDaChon.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
 
         jPanel6.setLayout(new java.awt.GridLayout(10, 1, 0, 10));
         jScrollPane3.setViewportView(jPanel6);
@@ -173,14 +191,14 @@ public class frmChonMon extends javax.swing.JFrame {
         jLabel32.setText("Tạm tính");
 
         jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel33.setText("Tạm tính");
+        jLabel33.setText("Giảm giá");
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel34.setText("Tạm tính");
+        jLabel34.setText("Thành tiền");
 
         jButton1.setText("Gộp Bàn");
 
-        jButton2.setText("Gộp Bàn");
+        jButton2.setText("Chuyển Bàn");
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel35.setText("Nhân viên");
@@ -261,8 +279,8 @@ public class frmChonMon extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))))
+                        .addComponent(lbSoBanDaChon, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +288,7 @@ public class frmChonMon extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbSoBanDaChon, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -326,7 +344,6 @@ public class frmChonMon extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -338,5 +355,6 @@ public class frmChonMon extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbSoBanDaChon;
     // End of variables declaration//GEN-END:variables
 }

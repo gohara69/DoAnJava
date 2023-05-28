@@ -44,7 +44,7 @@ public class frmBan extends javax.swing.JPanel {
     /**
      * Creates new form frmBan
      */
-    int saveSoBan;
+    public static int saveSoBan;
 
     public frmBan() {
         initComponents();
@@ -79,6 +79,7 @@ public class frmBan extends javax.swing.JPanel {
         int lengthTextBan = textBan.length();
         String tachLaySoBan = textBan.substring(7, lengthTextBan);
         int soBan = Integer.valueOf(tachLaySoBan);
+        saveSoBan = soBan;
         hd.setSoBan(soBan);
         hd.setMaNV(maNVLapHD);
         hd.setThanhTien(0);
