@@ -14,8 +14,21 @@ public class NguyenLieu {
     private String NL_DONVITINH;
     private float NL_GIA;
     private int NL_SOLUONG;
+    private int NL_NCC;
+
+    public int getNL_NCC() {
+        return NL_NCC;
+    }
+
+    public void setNL_NCC(int NL_NCC) {
+        this.NL_NCC = NL_NCC;
+    }
 
     public NguyenLieu() {
+    }
+    
+    public NguyenLieu(int NL_ID){
+        this.NL_ID = NL_ID;
     }
 
     public NguyenLieu(int NL_ID, String NL_TEN, String NL_DONVITINH, float NL_GIA, int NL_SOLUONG) {

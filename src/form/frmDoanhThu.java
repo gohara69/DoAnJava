@@ -29,39 +29,26 @@ public class frmDoanhThu extends javax.swing.JPanel {
         initComponents();
         chart.addLegend("Chi phí", Color.decode("#e65c00"), Color.decode("#F9D423"));
         chart.addLegend("Lợi nhuận", Color.decode("#7b4397"), Color.decode("#dc2430"));
+        btnThang.setSelected(true);
         setDataToChart();
-
-        //Tạo table bằng cách kéo table.java từ package swing vào giao diện
-        
-        //Header tự chỉnh thủ công: Click chuột trái vào table chọn table contents
-        
-        //Thiết kế phần cuối table không bị xám
-        spTable.getViewport().setBackground(Color.WHITE);
-        JPanel p = new JPanel();
-        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-        
-        //Thêm dữ liệu vào bảng
-        Vector info = new Vector();
-        info.add("Mã sinh viên");
-        info.add("Tên sinh viên");
-        info.add("Họ tên");
-        info.add("Địa chỉ");
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
-        table1.addRow(info);
     }
     
     public void setDataToChart(){
         ArrayList<chartModel> listChartModel = chartDAO.getListChartModel();
 
         chart.clear();
-        for (int i = 0 ; i < listChartModel.size() ; i++) {
+        for (int i = listChartModel.size() - 1 ; i >= 0  ; i--) {
+            chartModel d = listChartModel.get(i);
+            chart.addData(new modelChart(d.getMonth(), new double[]{d.getCost(), d.getProfit()}));
+        }
+        chart.start();
+    }
+    
+    public void layThongKeTheoNgay(){
+        ArrayList<chartModel> listChartModel = chartDAO.layThongKe30NgayGanNhat();
+
+        chart.clear();
+        for (int i = listChartModel.size() - 1 ; i >= 0  ; i--) {
             chartModel d = listChartModel.get(i);
             chart.addData(new modelChart(d.getMonth(), new double[]{d.getCost(), d.getProfit()}));
         }
@@ -77,50 +64,12 @@ public class frmDoanhThu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelBorder1 = new swing.panelBorder();
-        spTable = new javax.swing.JScrollPane();
-        table1 = new swing.table();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelShadow1 = new swing.panelShadow();
         chart = new swing.curveLineChart();
-
-        panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
-
-        spTable.setBorder(null);
-
-        table1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, true, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        spTable.setViewportView(table1);
-
-        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
-        panelBorder1.setLayout(panelBorder1Layout);
-        panelBorder1Layout.setHorizontalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelBorder1Layout.setVerticalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btnNgay = new javax.swing.JRadioButton();
+        btnThang = new javax.swing.JRadioButton();
+        btnThongKe = new swing.button();
 
         chart.setBackground(new java.awt.Color(255, 255, 255));
         chart.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -129,48 +78,95 @@ public class frmDoanhThu extends javax.swing.JPanel {
         panelShadow1.setLayout(panelShadow1Layout);
         panelShadow1Layout.setHorizontalGroup(
             panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelShadow1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelShadow1Layout.setVerticalGroup(
             panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelShadow1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
+
+        btnNgay.setText("Ngày");
+        btnNgay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNgayActionPerformed(evt);
+            }
+        });
+
+        btnThang.setText("Tháng");
+        btnThang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThangActionPerformed(evt);
+            }
+        });
+
+        btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(224, 224, 224)
+                        .addComponent(btnNgay)
+                        .addGap(113, 113, 113)
+                        .addComponent(btnThang)
+                        .addGap(59, 59, 59)
+                        .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelShadow1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNgay)
+                    .addComponent(btnThang)
+                    .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(panelShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNgayActionPerformed
+        btnThang.setSelected(false);
+    }//GEN-LAST:event_btnNgayActionPerformed
+
+    private void btnThangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThangActionPerformed
+        btnNgay.setSelected(false);
+    }//GEN-LAST:event_btnThangActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        if(btnThang.isSelected()){
+            setDataToChart();
+        } else if(btnNgay.isSelected()){
+            layThongKeTheoNgay();
+        }
+    }//GEN-LAST:event_btnThongKeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton btnNgay;
+    private javax.swing.JRadioButton btnThang;
+    private swing.button btnThongKe;
+    private javax.swing.ButtonGroup buttonGroup1;
     private swing.curveLineChart chart;
-    private swing.panelBorder panelBorder1;
     private swing.panelShadow panelShadow1;
-    private javax.swing.JScrollPane spTable;
-    private swing.table table1;
     // End of variables declaration//GEN-END:variables
 }

@@ -49,8 +49,9 @@ public class ChiTietPhieuDatDAO {
     public static ArrayList<ChiTietPhieuDat> layDsChiTietPDCuaPhieuDat(PhieuDat pd){
         ArrayList<ChiTietPhieuDat> dsCTPD = new ArrayList<>();
         try {
-            String sql = "select *\n" +
-                        "from CTPHIEUDAT where PD_ID = " + pd.getPD_ID();
+            String sql = String.format("select *\n" +
+                        "from CTPHIEUDAT\n" +
+                        "where PD_ID = %d and SOLUONG != DAGIAO", pd.getPD_ID());
             DataService ds = new DataService(main.main.nguoiDung);
             ds.open();
             ResultSet rs = ds.executeQuery(sql);

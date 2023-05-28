@@ -94,7 +94,11 @@ public class main extends javax.swing.JFrame {
                          setForm(new frmTrangChu());
                          break;
                     case 1:
-                        setForm(new frmNguyenLieu());
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemNguyenLieu(tkhoan)){
+                            setForm(new frmNguyenLieu());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         break;
                     case 2:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemNhaCungCap(tkhoan)){
