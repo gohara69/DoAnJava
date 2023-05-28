@@ -16,6 +16,10 @@ public class NhaCungCap {
 
     public NhaCungCap() {
     }
+    
+    public NhaCungCap(int NCC_ID){
+        this.NCC_ID = NCC_ID;
+    }
 
     public NhaCungCap(int NCC_ID, String NCC_TEN, String NCC_SDT, String NCC_DIACHI) {
         this.NCC_ID = NCC_ID;

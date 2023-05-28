@@ -35,6 +35,10 @@ public class NhanVien {
         this.NV_TINHTRANG = NV_TINHTRANG;
     }
 
+    public NhanVien(String NV_ID) {
+        this.NV_ID = NV_ID;
+    }
+
     public String getNV_ID() {
         return NV_ID;
     }

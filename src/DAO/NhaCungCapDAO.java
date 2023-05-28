@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.NguoiDung;
+import model.NguyenLieu;
 import model.PhieuDat;
 
 /**
@@ -158,5 +159,24 @@ public class NhaCungCapDAO {
              Logger.getLogger(NhaCungCapDAO.class.getName()).log(Level.SEVERE, null, ex);
          }
         return id + 1;
+    }
+    
+    public static NhaCungCap timKiemTheoNguyenLieu (NguyenLieu nl) {
+        NhaCungCap ncc = new NhaCungCap();
+        try {
+            String sql = "select ncc.NCC_ID, NCC_TEN\n" +
+                        "from NHACUNGCAP ncc, NGUYENLIEU nl\n" +
+                        "where ncc.NCC_ID = nl.NCC_ID and nl.NL_ID = " + nl.getNL_ID();
+            DataService ds = new DataService(main.main.nguoiDung);
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()){
+                ncc.setNCC_ID(rs.getInt("NCC_ID"));
+                ncc.setNCC_TEN(rs.getString("NCC_TEN"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ncc;
     }
 }
