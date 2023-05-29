@@ -10,6 +10,7 @@ import DAO.TaiKhoanDAO;
 import main.main;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -46,10 +47,11 @@ public class frmBan extends javax.swing.JPanel {
      */
     public static int saveSoBan;
     public static int saveHoaDon;
-
+    public Component[] components;
     public frmBan() {
         initComponents();
         insertButtonTable();
+        components = this.jPanel1.getComponents();
     }
 
     public JButton createButtonTable(int numTable, String srcImg) {
@@ -70,13 +72,14 @@ public class frmBan extends javax.swing.JPanel {
         return button;
     }
 
-    public int catChuoiLaySoBan(String textButtonBan){
+    public int catChuoiLaySoBan(String textButtonBan) {
         String soBan = "";
-        for(int i = 7; i < textButtonBan.length(); i++)
+        for (int i = 7; i < textButtonBan.length(); i++) {
             soBan += textButtonBan.charAt(i);
+        }
         return Integer.valueOf(soBan);
-    }   
-    
+    }
+
     public HoaDon createHoaDon(String textButtonBan) {
         HoaDon hd = new HoaDon();
         TaiKhoan tk = main.tkhoan;
@@ -133,10 +136,9 @@ public class frmBan extends javax.swing.JPanel {
                     if (!fileNameIconTable.equals(fileNameIconTableFull)) {
                         HoaDon hd = createHoaDon(button.getText());
                         HoaDonDAO.addBill(hd);
-                    }
-                    else
+                    } else {
                         saveHoaDon = HoaDonDAO.layMaHoaDonTheoBan(saveSoBan);
-                    
+                    }
                     frmChonMon form = new frmChonMon();
                     form.setVisible(true);
                 }
@@ -243,7 +245,15 @@ public class frmBan extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        jPanel1.removeAll();
+        for (Component component : components) {
+            ImageIcon icon = (ImageIcon)((JButton) component).getIcon();
+            String fileNameImgTable = icon.getDescription();
+            if(fileNameImgTable.equals("./src/icon/table_full.png")){
+                jPanel1.add(component);
+            }
+        }
+        jPanel1.updateUI();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -260,7 +270,15 @@ public class frmBan extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+        jPanel1.removeAll();
+        for (Component component : components) {
+            ImageIcon icon = (ImageIcon)((JButton) component).getIcon();
+            String fileNameImgTable = icon.getDescription();
+            if(fileNameImgTable.equals("./src/icon/table_empty.png")){
+                jPanel1.add(component);
+            }
+        }
+        jPanel1.updateUI();
     }//GEN-LAST:event_jButton5ActionPerformed
 
 

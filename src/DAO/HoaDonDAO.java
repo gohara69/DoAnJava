@@ -20,19 +20,21 @@ import model.HoaDon;
  * @author PC
  */
 public class HoaDonDAO {
-    public static boolean addBill(HoaDon hd){
+
+    public static boolean addBill(HoaDon hd) {
         boolean kq = false;
-        String sql = "INSERT INTO HOADON(HD_ID, NV_ID, B_SOBAN, HD_THANHTIEN, HD_NGAYXUAT, HD_TrangThai) values ("+hd.getMaHD()+", '"+hd.getMaNV()+"', "+hd.getSoBan()+", "+hd.getThanhTien()+", '"+hd.getNgayXuatHD()+"', '"+hd.isTrangThai()+"')";
+        String sql = "INSERT INTO HOADON(HD_ID, NV_ID, B_SOBAN, HD_THANHTIEN, HD_NGAYXUAT, HD_TrangThai) values (" + hd.getMaHD() + ", '" + hd.getMaNV() + "', " + hd.getSoBan() + ", " + hd.getThanhTien() + ", '" + hd.getNgayXuatHD() + "', '" + hd.isTrangThai() + "')";
         DataService ds = new DataService();
         ds.open();
-            int n = ds.executeUpdate(sql);
-        if(n == 1){
+        int n = ds.executeUpdate(sql);
+        if (n == 1) {
             kq = true;
         }
         ds.close();
         return kq;
     }
-    public static int layMaHoaDonTiepTheo(){
+
+    public static int layMaHoaDonTiepTheo() {
         ArrayList<HoaDon> dshd = new ArrayList<>();
         int id = 0;
         try {
@@ -40,7 +42,7 @@ public class HoaDonDAO {
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 id = rs.getInt("HD_ID");
             }
         } catch (Exception e) {
@@ -48,10 +50,11 @@ public class HoaDonDAO {
         }
         return id + 1;
     }
-    public static int layDonGiaHoaDon(int soBan){
+
+    public static int layDonGiaHoaDon(int soBan) {
         int donGia = 0;
         try {
-            String sql = "select HD_THANHTIEN from HOADON where B_SOBAN = "+soBan+" and HD_TrangThai = 'False'";
+            String sql = "select HD_THANHTIEN from HOADON where B_SOBAN = " + soBan + " and HD_TrangThai = 'False'";
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
@@ -63,10 +66,11 @@ public class HoaDonDAO {
         }
         return donGia;
     }
-    public static int layMaHoaDonTheoBan(int soBan){
+
+    public static int layMaHoaDonTheoBan(int soBan) {
         int maHoaDon = 0;
         try {
-            String sql = "select HD_ID from HOADON where B_SOBAN = "+soBan+" and HD_TrangThai = 'False'";
+            String sql = "select HD_ID from HOADON where B_SOBAN = " + soBan + " and HD_TrangThai = 'False'";
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
@@ -77,5 +81,18 @@ public class HoaDonDAO {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return maHoaDon;
+    }
+
+    public static boolean thanhToanHoaDon(int soBan) {
+        boolean kq = false;
+        String sql = "update HOADON set HD_TrangThai = 'True' where B_SOBAN = "+soBan+" and HD_TrangThai = 'False'";
+        DataService ds = new DataService();
+        ds.open();
+        int n = ds.executeUpdate(sql);
+        if (n == 1) {
+            kq = true;
+        }
+        ds.close();
+        return kq;
     }
 }
