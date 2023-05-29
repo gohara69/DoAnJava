@@ -10,10 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import model.Ban;
 import model.HoaDon;
+import model.NguyenLieu;
+import model.TableHoaDon;
 
 /**
  *
@@ -94,5 +97,33 @@ public class HoaDonDAO {
         }
         ds.close();
         return kq;
+    }
+    
+    public static ArrayList<TableHoaDon> getListBill(){
+        ArrayList<TableHoaDon> dshd = new ArrayList<>();
+   
+        try {
+            String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                TableHoaDon hd = new TableHoaDon();
+                String trangThai = rs.getString("HD_TrangThai");
+                hd.setMaHoaDon(rs.getInt("HD_ID"));
+                hd.setTenNhanVien(rs.getString("NV_TEN"));
+                hd.setSoBan(rs.getInt("B_SOBAN"));
+                hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
+                hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
+                if(trangThai.equals("0"))
+                    hd.setTrangThai("Chưa thanh toán");
+                else
+                    hd.setTrangThai("Đã thanh toán");               
+                dshd.add(hd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dshd;
     }
 }
