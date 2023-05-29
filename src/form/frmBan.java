@@ -45,6 +45,7 @@ public class frmBan extends javax.swing.JPanel {
      * Creates new form frmBan
      */
     public static int saveSoBan;
+    public static int saveHoaDon;
 
     public frmBan() {
         initComponents();
@@ -69,17 +70,26 @@ public class frmBan extends javax.swing.JPanel {
         return button;
     }
 
+    public int catChuoiLaySoBan(String textButtonBan){
+        String soBan = "";
+        for(int i = 7; i < textButtonBan.length(); i++)
+            soBan += textButtonBan.charAt(i);
+        return Integer.valueOf(soBan);
+    }   
+    
     public HoaDon createHoaDon(String textButtonBan) {
         HoaDon hd = new HoaDon();
         TaiKhoan tk = main.tkhoan;
         String maNVLapHD = TaiKhoanDAO.layMaNVLapHD(tk.getTK_ID());
         LocalDate date = LocalDate.now();
-        hd.setMaHD(HoaDonDAO.layMaHoaDonTiepTheo());
+
         String textBan = textButtonBan;
         int lengthTextBan = textBan.length();
         String tachLaySoBan = textBan.substring(7, lengthTextBan);
         int soBan = Integer.valueOf(tachLaySoBan);
-        saveSoBan = soBan;
+        int maHoaDon = HoaDonDAO.layMaHoaDonTiepTheo();
+        saveHoaDon = maHoaDon;
+        hd.setMaHD(maHoaDon);
         hd.setSoBan(soBan);
         hd.setMaNV(maNVLapHD);
         hd.setThanhTien(0);
@@ -116,8 +126,17 @@ public class frmBan extends javax.swing.JPanel {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    HoaDon hd = createHoaDon(button.getText());
-                    HoaDonDAO.addBill(hd);
+                    String fileNameIconTableFull = "./src/icon/table_full.png";
+                    ImageIcon icon = (ImageIcon) button.getIcon();
+                    String fileNameIconTable = icon.getDescription();
+                    saveSoBan = catChuoiLaySoBan(button.getText());
+                    if (!fileNameIconTable.equals(fileNameIconTableFull)) {
+                        HoaDon hd = createHoaDon(button.getText());
+                        HoaDonDAO.addBill(hd);
+                    }
+                    else
+                        saveHoaDon = HoaDonDAO.layMaHoaDonTheoBan(saveSoBan);
+                    
                     frmChonMon form = new frmChonMon();
                     form.setVisible(true);
                 }

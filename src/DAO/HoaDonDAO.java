@@ -7,10 +7,12 @@ package DAO;
 import DataService.DataService;
 import form.frmChonMon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
+import model.Ban;
 import model.HoaDon;
 
 /**
@@ -46,6 +48,34 @@ public class HoaDonDAO {
         }
         return id + 1;
     }
-    
-    
+    public static int layDonGiaHoaDon(int soBan){
+        int donGia = 0;
+        try {
+            String sql = "select HD_THANHTIEN from HOADON where B_SOBAN = "+soBan+" and HD_TrangThai = 'False'";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while (rs.next()) {
+                donGia = rs.getInt("HD_THANHTIEN");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return donGia;
+    }
+    public static int layMaHoaDonTheoBan(int soBan){
+        int maHoaDon = 0;
+        try {
+            String sql = "select HD_ID from HOADON where B_SOBAN = "+soBan+" and HD_TrangThai = 'False'";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while (rs.next()) {
+                maHoaDon = rs.getInt("HD_ID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return maHoaDon;
+    }
 }

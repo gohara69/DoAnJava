@@ -5,6 +5,7 @@
 package form;
 
 import DAO.DanhMucDAO;
+import DAO.HoaDonDAO;
 import DAO.MonDAO;
 import DAO.OrderDAO;
 import java.awt.Font;
@@ -23,7 +24,10 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.text.Document;
+import javax.swing.text.Element;
 import model.DanhMuc;
+import model.ModelButtonFood;
 import model.Mon;
 
 /**
@@ -35,14 +39,18 @@ public class frmChonMon extends javax.swing.JFrame {
     /**
      * Creates new form frmChonMon1
      */
-    int sumPriceOrder = 0;
+
+    int sumPriceOrder = HoaDonDAO.layDonGiaHoaDon(frmBan.saveSoBan);
     public frmChonMon() {
         initComponents();
         insertAllButtonFood();
         insertButtonCategoryFood();
+        insertButtonFoodOrderd();
         lbSoBanDaChon.setText("Chi Tiết Gọi Món Bàn Số " + frmBan.saveSoBan);
+        jLabel1.setText(sumPriceOrder + " VNĐ");
         jPanel1.updateUI();
     }
+
     public ImageIcon resizeImage(String srcImg, int height, int width) {
         try {
             BufferedImage bufferedImage = ImageIO.read(new File(srcImg));
@@ -70,28 +78,53 @@ public class frmChonMon extends javax.swing.JFrame {
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         button.setFont(font);
-        button.setText("<html><body style=\"text-align: center; color: #00DD00\">" + nameFood + "<br>" + "<p style=\"color: #33CCFF\">" + priceFood + " VNĐ" + "<br>" + "<span style=\"color: #FF00FF;\">"+ quantity +"</span>" +"</p>" + "</body></html>");
+        button.setText("<html><body style=\"text-align: center; color: #00DD00\">" + nameFood + "<br>" + "<p style=\"color: #33CCFF\">" + priceFood + " VNĐ" + "<br>" + "<span style=\"color: #FF00FF;\">" + quantity + "</span>" + "</p>" + "</body></html>");
         return button;
     }
-    
-    public void insertButtonFoodChoose(int soLuong, JPanel panelContainBtnFoodOrder, JButton buttonFoodChoose){
+
+    public String tachChuoiLayTenMon(String textButtonFood) {
+        String textNameFood = "";
+        for (int i = 55; i < textButtonFood.length(); i++) {
+            if (textButtonFood.charAt(i) != '<')
+                textNameFood += textButtonFood.charAt(i);
+            else 
+                break;
+        }
+        return textNameFood;
+    }
+
+    public void insertButtonFoodChoose(JPanel panelContainBtnFoodOrder, JButton buttonFoodChoose) {
         panelContainBtnFoodOrder.add(buttonFoodChoose);
         panelContainBtnFoodOrder.updateUI();
         buttonFoodChoose.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int option = JOptionPane.showConfirmDialog(frmChonMon.this, "Bạn có muốn xóa món?");
-                if(option == 0)
-                {
+                if (option == 0) {
+                    String nameFood = tachChuoiLayTenMon(buttonFoodChoose.getText());
                     panelContainBtnFoodOrder.remove(buttonFoodChoose);
                     panelContainBtnFoodOrder.revalidate();
                     panelContainBtnFoodOrder.repaint();
+                    boolean check = OrderDAO.removeOrder(nameFood, frmBan.saveHoaDon);
+                    if (check) {
+                        JOptionPane.showMessageDialog(frmChonMon.this, "Đã xóa món");
+                    }
                 }
             }
         });
     }
 
+    public void insertButtonFoodOrderd(){
+        ArrayList<ModelButtonFood> listFoodOrder = OrderDAO.getListFoodOrdered(frmBan.saveSoBan);
+        for(ModelButtonFood a : listFoodOrder){
+            JButton button = createButtonFood(a.getSrcAnh(), a.getTenMon(), a.getGia(), String.valueOf(a.getSoLuong()));
+            jPanel6.add(button);
+        }
+        jPanel6.updateUI();
+    }
+    
     public void insertButtonFood(ArrayList<Mon> dsMon, JPanel panelContainBtnFood, JPanel panelContainBtnFoodOrder) {
+        
         for (Mon mon : dsMon) {
             JButton button = createButtonFood(mon.getSrcAnh(), mon.getTenMon(), mon.getGiaMon(), "");
             panelContainBtnFood.add(button);
@@ -100,14 +133,13 @@ public class frmChonMon extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     int quantityOrder = Integer.valueOf(JOptionPane.showInputDialog("Nhập số lượng: "));
                     JButton bt = createButtonFood(mon.getSrcAnh(), mon.getTenMon(), mon.getGiaMon(), "Số lượng: " + String.valueOf(quantityOrder));
-//                    panelContainBtnFoodOrder.add(bt);
-//                    panelContainBtnFoodOrder.updateUI();
-                    insertButtonFoodChoose(quantityOrder, panelContainBtnFoodOrder, bt);
+                    insertButtonFoodChoose(panelContainBtnFoodOrder, bt);
                     sumPriceOrder += mon.getGiaMon() * quantityOrder;
                     jLabel1.setText(sumPriceOrder + " VNĐ");
-                    boolean checkAddOrderSql = OrderDAO.addOrder(mon, quantityOrder, 3, "");
-                    if(checkAddOrderSql)
-                        JOptionPane.showMessageDialog(frmChonMon.this, "Add Success");
+                    boolean checkAddOrderSql = OrderDAO.addOrder(mon, quantityOrder, frmBan.saveHoaDon, "");
+                    if (checkAddOrderSql) {
+                        JOptionPane.showMessageDialog(frmChonMon.this, "Đã thêm món");
+                    }
                 }
             });
         }
