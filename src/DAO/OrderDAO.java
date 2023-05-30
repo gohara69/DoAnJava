@@ -131,9 +131,10 @@ public class OrderDAO {
     public static Integer laySoLuongOrder1MonTheoHoaDon(HoaDon hd, Mon m){
         Integer kq = 0;
         try {
-            String sql = String.format("select *\n" +
-                        "from [Order]\n" +
-                        "where HD_ID = %d and M_TEN = N'%s'", hd.getMaHD(), m.getTenMon());
+            String sql = String.format("select M_TEN, SUM(O_SOLUONG) as 'O_SOLUONG'\n" +
+                                        "from [Order]\n" +
+                                        "where HD_ID = %d and M_TEN = N'%s'\n" +
+                                        "group by M_TEN", hd.getMaHD(), m.getTenMon());
             System.out.println(sql);
             DataService ds = new DataService();
             ds.open();
