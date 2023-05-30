@@ -14,6 +14,12 @@ public class HoaDon {
     boolean trangThai;
 
     public HoaDon(){}
+
+    public HoaDon(int maHD) {
+        this.maHD = maHD;
+    }
+    
+    
     
     public HoaDon(int maHD, int soBan, int thanhTien, String maNV, String ngayXuatHD, boolean trangThai) {
         this.maHD = maHD;

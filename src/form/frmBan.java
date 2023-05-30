@@ -4,6 +4,7 @@
  */
 package form;
 
+import DAO.BanDAO;
 import DAO.HoaDonDAO;
 import DAO.OrderDAO;
 import DAO.TaiKhoanDAO;
@@ -48,9 +49,15 @@ public class frmBan extends javax.swing.JPanel {
     public static int saveSoBan;
     public static int saveHoaDon;
     public Component[] components;
+    public static ArrayList<Ban> dsBan = new ArrayList<Ban>();
     public frmBan() {
         initComponents();
         insertButtonTable();
+        int soBan = BanDAO.getQuantityTable();
+        for(int i = 0 ; i < soBan ; i++){
+            int hd = HoaDonDAO.layMaHoaDonTheoBan(i + 1);
+            dsBan.add(new Ban(i + 1, hd));
+        }
         components = this.jPanel1.getComponents();
     }
 
@@ -133,13 +140,9 @@ public class frmBan extends javax.swing.JPanel {
                     ImageIcon icon = (ImageIcon) button.getIcon();
                     String fileNameIconTable = icon.getDescription();
                     saveSoBan = catChuoiLaySoBan(button.getText());
-                    if (!fileNameIconTable.equals(fileNameIconTableFull)) {
-                        HoaDon hd = createHoaDon(button.getText());
-                        HoaDonDAO.addBill(hd);
-                    } else {
-                        saveHoaDon = HoaDonDAO.layMaHoaDonTheoBan(saveSoBan);
-                    }
+                    
                     frmChonMon form = new frmChonMon();
+                    form.setLocation(310, 85);
                     form.setVisible(true);
                 }
             });

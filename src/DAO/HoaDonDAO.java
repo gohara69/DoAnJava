@@ -74,6 +74,7 @@ public class HoaDonDAO {
         int maHoaDon = 0;
         try {
             String sql = "select HD_ID from HOADON where B_SOBAN = " + soBan + " and HD_TrangThai = 'False'";
+            System.out.println(sql);
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
@@ -125,5 +126,38 @@ public class HoaDonDAO {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return dshd;
+    }
+    
+    public static boolean themMoiHoaDon(HoaDon hd) {
+        boolean kq = false;
+        String sql = String.format("INSERT INTO HOADON(HD_ID, NV_ID, B_SOBAN, HD_TrangThai)" +
+                "values(%d,'%s',%d,'%s')", hd.getMaHD(), hd.getMaNV(), hd.getSoBan(), hd.isTrangThai());
+        DataService ds = new DataService();
+        ds.open();
+        int n = ds.executeUpdate(sql);
+        if (n == 1) {
+            kq = true;
+        }
+        ds.close();
+        return kq;
+    }
+    
+    public static int layHoaDonChuaThanhToanTheoBan(Ban ban) {
+        int maHoaDon = 0;
+        try {
+            String sql = String.format("select *\n" +
+                        "from HOADON \n" +
+                        "where B_SOBAN = %d and HD_TrangThai = 'False'", ban.getB_SOBAN());
+            System.out.println(sql);
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while (rs.next()) {
+                maHoaDon = rs.getInt("HD_ID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return maHoaDon;
     }
 }
