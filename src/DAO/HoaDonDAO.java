@@ -126,4 +126,88 @@ public class HoaDonDAO {
         } 
         return dshd;
     }
+    
+    public static ArrayList<TableHoaDon> getListBillByNumberTable(int soBan){
+        ArrayList<TableHoaDon> dshd = new ArrayList<>();
+   
+        try {
+            String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and hd.B_SOBAN = " + soBan;
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                TableHoaDon hd = new TableHoaDon();
+                String trangThai = rs.getString("HD_TrangThai");
+                hd.setMaHoaDon(rs.getInt("HD_ID"));
+                hd.setTenNhanVien(rs.getString("NV_TEN"));
+                hd.setSoBan(rs.getInt("B_SOBAN"));
+                hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
+                hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
+                if(trangThai.equals("0"))
+                    hd.setTrangThai("Chưa thanh toán");
+                else
+                    hd.setTrangThai("Đã thanh toán");               
+                dshd.add(hd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dshd;
+    }
+    
+    public static ArrayList<TableHoaDon> getListBillByNameEmployee(String name){
+        ArrayList<TableHoaDon> dshd = new ArrayList<>();
+   
+        try {
+            String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and nv.NV_TEN = N'"+name+"'";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                TableHoaDon hd = new TableHoaDon();
+                String trangThai = rs.getString("HD_TrangThai");
+                hd.setMaHoaDon(rs.getInt("HD_ID"));
+                hd.setTenNhanVien(rs.getString("NV_TEN"));
+                hd.setSoBan(rs.getInt("B_SOBAN"));
+                hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
+                hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
+                if(trangThai.equals("0"))
+                    hd.setTrangThai("Chưa thanh toán");
+                else
+                    hd.setTrangThai("Đã thanh toán");               
+                dshd.add(hd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dshd;
+    }
+    
+    public static ArrayList<TableHoaDon> getListBillByStatusBill(String status){
+        ArrayList<TableHoaDon> dshd = new ArrayList<>();
+   
+        try {
+                String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and hd.HD_TrangThai = " + status;
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                TableHoaDon hd = new TableHoaDon();
+                String trangThai = rs.getString("HD_TrangThai");
+                hd.setMaHoaDon(rs.getInt("HD_ID"));
+                hd.setTenNhanVien(rs.getString("NV_TEN"));
+                hd.setSoBan(rs.getInt("B_SOBAN"));
+                hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
+                hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
+                if(trangThai.equals("0"))
+                    hd.setTrangThai("Chưa thanh toán");
+                else
+                    hd.setTrangThai("Đã thanh toán");               
+                dshd.add(hd);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return dshd;
+    }
 }

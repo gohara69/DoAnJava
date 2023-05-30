@@ -157,4 +157,20 @@ public class NhanVienDAO {
         } 
         return nvien;
     }
+     public static ArrayList<String> layTenNhanVien() {
+        ArrayList<String> ds_tenNV = new ArrayList<>();
+        try {
+            String sql = "SELECT NV_TEN FROM NHANVIEN";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()) {
+                String ten_nv = rs.getString("NV_TEN");             
+                ds_tenNV.add(ten_nv);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return ds_tenNV;
+    }
 }

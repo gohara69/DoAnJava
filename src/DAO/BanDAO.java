@@ -147,4 +147,20 @@ public class BanDAO {
         }
         return kq;
     }
+    public static ArrayList<Integer> getAllNumberTable() {
+        ArrayList<Integer> dsb = new ArrayList<Integer>();
+        try {
+            String sql = "select B_SOBAN from BAN";
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while (rs.next()) {
+                int b = rs.getInt("B_SOBAN");
+                dsb.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dsb;
+    }
 }
