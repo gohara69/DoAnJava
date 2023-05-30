@@ -23,6 +23,8 @@ public class NhanVien {
     public NhanVien(){
     }
     
+    
+    
     public NhanVien(String NV_ID, String QA_DIACHI, String NV_TEN,Boolean NV_GIOITINH,String NV_NGAYSINH, String NV_DIACHI,String NV_SDT,String NV_IMG,String NV_TINHTRANG) {
         this.NV_ID= NV_ID;
         this.QA_DIACHI = QA_DIACHI;

@@ -8,6 +8,7 @@ import DAO.PhanQuyenDAO;
 import DAO.TaiKhoanDAO;
 import event.eventMenuSelected;
 import form.frmBan;
+import form.frmBep;
 import form.frmChonMon;
 import form.frmDangNhap;
 import form.frmDanhMuc;
@@ -44,22 +45,22 @@ public class main extends javax.swing.JFrame {
             public void selected(int index) {
                 switch(index){
                     case 0:
-                         setForm(new frmTrangChu(main.this));
-                         break;
-                    case 1:
-                        setForm(new frmNguyenLieu());
+                         setForm(new frmNguyenLieu());
                         break;
-                    case 2:
+                    case 1:
                         setForm(new frmNhaCungCap());
                         break;
-                    case 3:
+                    case 2:
                         setForm(new frmDanhMuc());
                         break;
-                    case 4:
+                    case 3:
                         setForm(new frmNhanVien());
                         break;
-                    case 5:
+                    case 4:
                         setForm(new frmChonMon());
+                        break;
+                    case 5:
+                        setForm(new frmBep());
                         break;
                     case 6:
                         setForm(new frmHoaDon());
@@ -91,38 +92,42 @@ public class main extends javax.swing.JFrame {
             public void selected(int index) {
                 switch(index){
                     case 0:
-                         setForm(new frmTrangChu());
-                         break;
-                    case 1:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemNguyenLieu(tkhoan)){
                             setForm(new frmNguyenLieu());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
-                        break;
-                    case 2:
+                         break;
+                    case 1:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemNhaCungCap(tkhoan)){
                             setForm(new frmNhaCungCap());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 3:
+                    case 2:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemDanhMuc(tkhoan)){
                             setForm(new frmDanhMuc());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 4:
+                    case 3:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemNhanVien(tkhoan)){
                             setForm(new frmNhanVien());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 5:
+                    case 4:
                         setForm(new frmBan());
+                        break;
+                    case 5:
+                        if(PhanQuyenDAO.kiemTraCoQuyenXemOrder(tkhoan)){
+                            setForm(new frmBep());
+                        } else {
+                            JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         break;
                     case 6:
                         setForm(new frmHoaDon());

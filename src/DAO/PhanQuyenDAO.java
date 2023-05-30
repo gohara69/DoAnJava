@@ -304,4 +304,24 @@ public class PhanQuyenDAO {
         }
         return kq;
     }
+    
+    public static boolean kiemTraCoQuyenXemOrder(TaiKhoan tk){
+        boolean kq = false;
+        try {
+            String sql = String.format("select * \n" +
+                    "from NHOMQUYEN_NGUOIDUNG, NHOMQUYEN\n" +
+                    "where NHOMQUYEN_NGUOIDUNG.NQ_ID = NHOMQUYEN.NQ_ID and NHOMQUYEN_NGUOIDUNG.NG_ID = '%s'\n" +
+                    "and NHOMQUYEN.NQ_HIENTHI = N'Xem order'", tk.getTK_NGUOIDUNG());
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()){
+                kq = true;
+            }
+            return kq;
+        } catch (SQLException ex) {
+            Logger.getLogger(PhanQuyenDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kq;
+    }
 }
