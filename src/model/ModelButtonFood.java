@@ -8,25 +8,19 @@ package model;
  *
  * @author PC
  */
-public class Mon {
-    private String tenMon, srcAnh;
-    private int danhMuc, giaMon;
-    
-    public Mon(){
-        
-    }
+public class ModelButtonFood {
+    String tenMon, srcAnh;
+    int gia, soLuong;
 
-    public Mon(String tenMon) {
+    public ModelButtonFood(){};
+    
+    public ModelButtonFood(String tenMon, String srcAnh, int gia, int soLuong) {
         this.tenMon = tenMon;
+        this.srcAnh = srcAnh;
+        this.gia = gia;
+        this.soLuong = soLuong;
     }
 
-    public Mon(String tenMo, String srcAnh, int danhMuc, int giaMon) {
-        this.tenMon = tenMo;
-        this.srcAnh = srcAnh;
-        this.danhMuc = danhMuc;
-        this.giaMon = giaMon;
-    }
-    
     public String getTenMon() {
         return tenMon;
     }
@@ -35,12 +29,12 @@ public class Mon {
         return srcAnh;
     }
 
-    public int getDanhMuc() {
-        return danhMuc;
+    public int getGia() {
+        return gia;
     }
 
-    public int getGiaMon() {
-        return giaMon;
+    public int getSoLuong() {
+        return soLuong;
     }
 
     public void setTenMon(String tenMon) {
@@ -51,13 +45,13 @@ public class Mon {
         this.srcAnh = srcAnh;
     }
 
-    public void setDanhMuc(int danhMuc) {
-        this.danhMuc = danhMuc;
+    public void setGia(int gia) {
+        this.gia = gia;
     }
 
-    public void setGiaMon(int giaMon) {
-        this.giaMon = giaMon;
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
-
+    
     
 }

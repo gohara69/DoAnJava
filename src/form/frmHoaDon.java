@@ -4,12 +4,18 @@
  */
 package form;
 
+import DAO.HoaDonDAO;
+import DAO.NguyenLieuDAO;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import model.NguyenLieu;
+import model.TableHoaDon;
+import swing.scrollbar;
 
 /**
  *
@@ -20,26 +26,38 @@ public class frmHoaDon extends javax.swing.JPanel {
     /**
      * Creates new form frmHoaDon
      */
+    Vector data = new Vector();
+
     public frmHoaDon() {
         initComponents();
-        Vector vheader = new Vector();
-        Vector vdata = new Vector();
-        Vector vdataChild = new Vector();
-        vheader.add("Mã");
-        vheader.add("Nhà cung cấp");
-        vheader.add("Nhân viên");
-        vheader.add("Ngày nhập");
-        vheader.add("Thành tiền");
-        vdataChild.add("HD001");
-        vdataChild.add("Minh Sang");
-        vdataChild.add("Trần Thị Huyền Trang");
-        vdataChild.add("2002-12-12");
-        vdataChild.add("2000");
-        vdata.add(vdataChild);
-        tbHoaDon.setModel(new DefaultTableModel(vdata, vheader));
-        spHoaDon.getViewport().setBackground(Color.WHITE);
+        spTable.setVerticalScrollBar(new scrollbar());
+        spTable.getViewport().setBackground(Color.WHITE);
         JPanel p = new JPanel();
-        spHoaDon.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        spTable.setVerticalScrollBar(new scrollbar());
+        loadData();
+    }
+
+    public void loadData() {
+        clear();
+        data.removeAllElements();
+        ArrayList<TableHoaDon> dshd = HoaDonDAO.getListBill();
+        for (TableHoaDon hd : dshd) {
+            Vector info = new Vector();
+            info.add(hd.getMaHoaDon());
+            info.add(hd.getTenNhanVien());
+            info.add(hd.getSoBan());
+            info.add(hd.getThanhTien());
+            info.add(hd.getNgayXuatHD());
+            info.add(hd.getTrangThai());
+            tblHoaDon.addRow(info);
+            data.add(info);
+        }
+    }
+
+    public void clear() {
+        DefaultTableModel dtm = (DefaultTableModel) tblHoaDon.getModel();
+        dtm.setRowCount(0);
     }
 
     /**
@@ -54,9 +72,9 @@ public class frmHoaDon extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
-        panelBorder1 = new swing.panelBorder();
-        spHoaDon = new javax.swing.JScrollPane();
-        tbHoaDon = new javax.swing.JTable();
+        panelBorder3 = new swing.panelBorder();
+        spTable = new javax.swing.JScrollPane();
+        tblHoaDon = new swing.table();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -64,42 +82,39 @@ public class frmHoaDon extends javax.swing.JPanel {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
+        panelBorder3.setBackground(new java.awt.Color(255, 255, 255));
 
-        spHoaDon.setBorder(null);
+        spTable.setBorder(null);
 
-        tbHoaDon.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDon.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã hóa đơn", "Tên nhân viên", "Số bàn", "Thành tiền", "Ngày xuất hóa đơn", "Trạng thái"
             }
         ));
-        spHoaDon.setViewportView(tbHoaDon);
+        spTable.setViewportView(tblHoaDon);
 
-        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
-        panelBorder1.setLayout(panelBorder1Layout);
-        panelBorder1Layout.setHorizontalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 805, Short.MAX_VALUE)
-            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelBorder1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(spHoaDon)
-                    .addContainerGap()))
+        javax.swing.GroupLayout panelBorder3Layout = new javax.swing.GroupLayout(panelBorder3);
+        panelBorder3.setLayout(panelBorder3Layout);
+        panelBorder3Layout.setHorizontalGroup(
+            panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        panelBorder1Layout.setVerticalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 408, Short.MAX_VALUE)
-            .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelBorder1Layout.createSequentialGroup()
-                    .addGap(31, 31, 31)
-                    .addComponent(spHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                    .addGap(32, 32, 32)))
+        panelBorder3Layout.setVerticalGroup(
+            panelBorder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorder3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(spTable, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -115,7 +130,9 @@ public class frmHoaDon extends javax.swing.JPanel {
                         .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelBorder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,9 +143,9 @@ public class frmHoaDon extends javax.swing.JPanel {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(panelBorder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -137,8 +154,8 @@ public class frmHoaDon extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private swing.panelBorder panelBorder1;
-    private javax.swing.JScrollPane spHoaDon;
-    private javax.swing.JTable tbHoaDon;
+    private swing.panelBorder panelBorder3;
+    private javax.swing.JScrollPane spTable;
+    private swing.table tblHoaDon;
     // End of variables declaration//GEN-END:variables
 }

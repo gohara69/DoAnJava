@@ -61,4 +61,20 @@ public class TaiKhoanDAO {
         }
         return ng;
     }
+    public static String layMaNVLapHD(int maTK){
+        ArrayList<TaiKhoan> dstk = new ArrayList<>();
+        String maNV = "";
+        try {
+            String sql = "select * from TAIKHOAN where TK_ID = " + maTK;
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while(rs.next()){
+                maNV = rs.getString("TK_NV");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return maNV;
+    }
 }
