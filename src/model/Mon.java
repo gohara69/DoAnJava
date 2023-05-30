@@ -16,6 +16,10 @@ public class Mon {
         
     }
 
+    public Mon(String tenMon) {
+        this.tenMon = tenMon;
+    }
+
     public Mon(String tenMo, String srcAnh, int danhMuc, int giaMon) {
         this.tenMon = tenMo;
         this.srcAnh = srcAnh;

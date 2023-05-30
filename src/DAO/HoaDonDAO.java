@@ -74,6 +74,7 @@ public class HoaDonDAO {
         int maHoaDon = 0;
         try {
             String sql = "select HD_ID from HOADON where B_SOBAN = " + soBan + " and HD_TrangThai = 'False'";
+            System.out.println(sql);
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
@@ -88,7 +89,7 @@ public class HoaDonDAO {
 
     public static boolean thanhToanHoaDon(int soBan) {
         boolean kq = false;
-        String sql = "update HOADON set HD_TrangThai = 'True' where B_SOBAN = "+soBan+" and HD_TrangThai = 'False'";
+        String sql = "update HOADON set HD_TrangThai = 'True' where B_SOBAN = " + soBan + " and HD_TrangThai = 'False'";
         DataService ds = new DataService();
         ds.open();
         int n = ds.executeUpdate(sql);
@@ -98,16 +99,16 @@ public class HoaDonDAO {
         ds.close();
         return kq;
     }
-    
-    public static ArrayList<TableHoaDon> getListBill(){
+
+    public static ArrayList<TableHoaDon> getListBill() {
         ArrayList<TableHoaDon> dshd = new ArrayList<>();
-   
+
         try {
             String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID";
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 TableHoaDon hd = new TableHoaDon();
                 String trangThai = rs.getString("HD_TrangThai");
                 hd.setMaHoaDon(rs.getInt("HD_ID"));
@@ -115,27 +116,28 @@ public class HoaDonDAO {
                 hd.setSoBan(rs.getInt("B_SOBAN"));
                 hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
                 hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
-                if(trangThai.equals("0"))
+                if (trangThai.equals("0")) {
                     hd.setTrangThai("Chưa thanh toán");
-                else
-                    hd.setTrangThai("Đã thanh toán");               
+                } else {
+                    hd.setTrangThai("Đã thanh toán");
+                }
                 dshd.add(hd);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return dshd;
     }
-    
-    public static ArrayList<TableHoaDon> getListBillByNumberTable(int soBan){
+
+    public static ArrayList<TableHoaDon> getListBillByNumberTable(int soBan) {
         ArrayList<TableHoaDon> dshd = new ArrayList<>();
-   
+
         try {
             String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and hd.B_SOBAN = " + soBan;
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 TableHoaDon hd = new TableHoaDon();
                 String trangThai = rs.getString("HD_TrangThai");
                 hd.setMaHoaDon(rs.getInt("HD_ID"));
@@ -143,27 +145,28 @@ public class HoaDonDAO {
                 hd.setSoBan(rs.getInt("B_SOBAN"));
                 hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
                 hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
-                if(trangThai.equals("0"))
+                if (trangThai.equals("0")) {
                     hd.setTrangThai("Chưa thanh toán");
-                else
-                    hd.setTrangThai("Đã thanh toán");               
+                } else {
+                    hd.setTrangThai("Đã thanh toán");
+                }
                 dshd.add(hd);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return dshd;
     }
-    
-    public static ArrayList<TableHoaDon> getListBillByNameEmployee(String name){
+
+    public static ArrayList<TableHoaDon> getListBillByNameEmployee(String name) {
         ArrayList<TableHoaDon> dshd = new ArrayList<>();
-   
+
         try {
-            String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and nv.NV_TEN = N'"+name+"'";
+            String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and nv.NV_TEN = N'" + name + "'";
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 TableHoaDon hd = new TableHoaDon();
                 String trangThai = rs.getString("HD_TrangThai");
                 hd.setMaHoaDon(rs.getInt("HD_ID"));
@@ -171,27 +174,28 @@ public class HoaDonDAO {
                 hd.setSoBan(rs.getInt("B_SOBAN"));
                 hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
                 hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
-                if(trangThai.equals("0"))
+                if (trangThai.equals("0")) {
                     hd.setTrangThai("Chưa thanh toán");
-                else
-                    hd.setTrangThai("Đã thanh toán");               
+                } else {
+                    hd.setTrangThai("Đã thanh toán");
+                }
                 dshd.add(hd);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return dshd;
     }
-    
-    public static ArrayList<TableHoaDon> getListBillByStatusBill(String status){
+
+    public static ArrayList<TableHoaDon> getListBillByStatusBill(String status) {
         ArrayList<TableHoaDon> dshd = new ArrayList<>();
-   
+
         try {
-                String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and hd.HD_TrangThai = " + status;
+            String sql = "select * from HOADON hd, NHANVIEN nv where nv.NV_ID = hd.NV_ID and hd.HD_TrangThai = " + status;
             DataService ds = new DataService();
             ds.open();
             ResultSet rs = ds.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 TableHoaDon hd = new TableHoaDon();
                 String trangThai = rs.getString("HD_TrangThai");
                 hd.setMaHoaDon(rs.getInt("HD_ID"));
@@ -199,15 +203,49 @@ public class HoaDonDAO {
                 hd.setSoBan(rs.getInt("B_SOBAN"));
                 hd.setThanhTien(rs.getInt("HD_THANHTIEN"));
                 hd.setNgayXuatHD(rs.getString("HD_NGAYXUAT"));
-                if(trangThai.equals("0"))
+                if (trangThai.equals("0")) {
                     hd.setTrangThai("Chưa thanh toán");
-                else
-                    hd.setTrangThai("Đã thanh toán");               
+                } else {
+                    hd.setTrangThai("Đã thanh toán");
+                }
                 dshd.add(hd);
             }
         } catch (SQLException ex) {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
         return dshd;
+    }
+
+    public static boolean themMoiHoaDon(HoaDon hd) {
+        boolean kq = false;
+        String sql = String.format("INSERT INTO HOADON(HD_ID, NV_ID, B_SOBAN, HD_TrangThai)"
+                + "values(%d,'%s',%d,'%s')", hd.getMaHD(), hd.getMaNV(), hd.getSoBan(), hd.isTrangThai());
+        DataService ds = new DataService();
+        ds.open();
+        int n = ds.executeUpdate(sql);
+        if (n == 1) {
+            kq = true;
+        }
+        ds.close();
+        return kq;
+    }
+
+    public static int layHoaDonChuaThanhToanTheoBan(Ban ban) {
+        int maHoaDon = 0;
+        try {
+            String sql = String.format("select *\n"
+                    + "from HOADON \n"
+                    + "where B_SOBAN = %d and HD_TrangThai = 'False'", ban.getB_SOBAN());
+            System.out.println(sql);
+            DataService ds = new DataService();
+            ds.open();
+            ResultSet rs = ds.executeQuery(sql);
+            while (rs.next()) {
+                maHoaDon = rs.getInt("HD_ID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return maHoaDon;
     }
 }

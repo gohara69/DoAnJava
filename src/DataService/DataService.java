@@ -18,10 +18,10 @@ import model.NguoiDung;
  * @author VU HOANG
  */
 public class DataService {
-//        String strServer = "DESKTOP-3PMAECF";
-//        String strDatabase = "QL_QuanMiCay";
-//        String strUser = "sa";
-//        String strPassword = "123";
+        String strServer = "DESKTOP-3PMAECF";
+        String strDatabase = "QL_QuanMiCay";
+        String strUser = "sa";
+        String strPassword = "123";
 
         //Tuyền
 //        String strServer = "LAPTOP-0LI9CK71";
@@ -29,10 +29,10 @@ public class DataService {
 //        String strUser = "ngoctuyen";
 //        String strPassword = "1234";
 
-        String strServer = "DELL\\SQLEXPRESS";
-        String strDatabase = "QL_QuanMiCay";
-        String strUser = "sa";
-        String strPassword = "21062002";
+//        String strServer = "DELL\\SQLEXPRESS";
+//        String strDatabase = "QL_QuanMiCay";
+//        String strUser = "sa";
+//        String strPassword = "21062002";
         
 //        String strServer = "DELL\\SQLEXPRESS";
 //        String strDatabase = "QL_QuanMiCay";
