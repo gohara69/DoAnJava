@@ -91,57 +91,55 @@ public class main extends javax.swing.JFrame {
             public void selected(int index) {
                 switch(index){
                     case 0:
-                         setForm(new frmTrangChu());
-                         break;
-                    case 1:
-                        if(PhanQuyenDAO.kiemTraCoQuyenXemNguyenLieu(tkhoan)){
+                         if(PhanQuyenDAO.kiemTraCoQuyenXemNguyenLieu(tkhoan)){
                             setForm(new frmNguyenLieu());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
-                        break;
-                    case 2:
+                         break;
+                    case 1:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemNhaCungCap(tkhoan)){
                             setForm(new frmNhaCungCap());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 3:
+                    case 2:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemDanhMuc(tkhoan)){
                             setForm(new frmDanhMuc());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 4:
+                    case 3:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemNhanVien(tkhoan)){
                             setForm(new frmNhanVien());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 5:
+                    case 4:
                         setForm(new frmBan());
                         break;
-                    case 6:
+                    case 5:
                         setForm(new frmHoaDon());
                         break;
-                    case 8:
+                        
+                    case 7:
                         if("sa".equals(tkhoan.getTK_NGUOIDUNG())){
                             setForm(new frmQuyen());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                          break;
-                    case 9:
+                    case 8:
                         if(PhanQuyenDAO.kiemTraCoQuyenXemDoanhThu(tkhoan)){
                             setForm(new frmDoanhThu());
                         } else {
                             JOptionPane.showMessageDialog(main.this, "Bạn không có quyền truy cập", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                         }
                         break;
-                    case 10:
+                    case 9:
                         frmDangNhap frm = new frmDangNhap();
                         setVisible(false);
                         dispose();
